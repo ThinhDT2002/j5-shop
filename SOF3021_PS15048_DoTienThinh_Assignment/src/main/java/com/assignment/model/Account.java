@@ -1,0 +1,124 @@
+package com.assignment.model;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Accounts")
+public class Account implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name = "Username")
+	private String username;
+	@Column(name = "Password")
+	private String password;
+	@Column(name = "Fullname")
+	private String fullname;
+	@Column(name = "Phonenumber")
+	private String phonenumber;
+	@Column(name = "Email")
+	private String email;
+	@Column(name = "Photo")
+	private String photo;
+	@Column(name = "Admin")
+	private Boolean admin;
+	@OneToMany(mappedBy = "account")
+	private List<Orders> orders;
+
+	public Account() {
+		super();
+	}
+
+	public Account(String username, String password, String fullname, String phonenumber, String email, String photo,
+			Boolean admin, List<Orders> orders) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.fullname = fullname;
+		this.phonenumber = phonenumber;
+		this.email = email;
+		this.photo = photo;
+		this.admin = admin;
+		this.orders = orders;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getPhonenumber() {
+		return phonenumber;
+	}
+
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+
+	public List<Orders> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+}
