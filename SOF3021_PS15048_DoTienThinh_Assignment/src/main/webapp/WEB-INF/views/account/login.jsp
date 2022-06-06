@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -418,15 +420,16 @@ form.sign-in-form {
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="#" class="sign-in-form">
+          <form:form action="/account/doLogin" class="sign-in-form" method="post">
             <h2 class="title">Đăng nhập</h2>
+            <h2 class="title">${message}</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Tài khoản" />
+              <input type="text" name="login-username" placeholder="Tài khoản" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Mật khẩu" />
+              <input type="password" name="login-password" placeholder="Mật khẩu" />
             </div>
             <input type="submit" value="Đăng nhập" class="btn solid" />
             <p class="social-text">Hoặc Đăng nhập bằng các nền tảng xã hội</p>
@@ -444,20 +447,20 @@ form.sign-in-form {
                 <i class="fab fa-linkedin-in"></i>
               </a>
             </div>
-          </form>
-          <form action="#" class="sign-up-form">
+          </form:form>
+          <form:form action="/account/doSignup" method="post" class="sign-up-form">
             <h2 class="title">Đăng ký</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Tài khoản" />
+              <input type="text" name="sign-up-username" placeholder="Tài khoản" />
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" />
+              <input type="email" name="sign-up-email" placeholder="Email" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Mật khẩu" />
+              <input type="password" name="sign-up-password" placeholder="Mật khẩu" />
             </div>
             <input type="submit" class="btn" value="Đăng ký" />
             <p class="social-text">Hoặc Đăng ký với các nền tảng xã hội</p>
@@ -475,7 +478,7 @@ form.sign-in-form {
                 <i class="fab fa-linkedin-in"></i>
               </a>
             </div>
-          </form>
+          </form:form>
         </div>
       </div>
 
