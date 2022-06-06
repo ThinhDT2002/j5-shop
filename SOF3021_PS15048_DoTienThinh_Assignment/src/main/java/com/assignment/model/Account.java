@@ -33,6 +33,8 @@ public class Account implements Serializable {
 	private String photo;
 	@Column(name = "Admin")
 	private Boolean admin;
+	@Column(name = "Activated")
+	private Boolean activated;
 	@OneToMany(mappedBy = "account")
 	private List<Orders> orders;
 
@@ -41,7 +43,7 @@ public class Account implements Serializable {
 	}
 
 	public Account(String username, String password, String fullname, String phonenumber, String email, String photo,
-			Boolean admin, List<Orders> orders) {
+			Boolean admin,Boolean activated, List<Orders> orders) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -50,6 +52,7 @@ public class Account implements Serializable {
 		this.email = email;
 		this.photo = photo;
 		this.admin = admin;
+		this.activated = activated;
 		this.orders = orders;
 	}
 
@@ -107,6 +110,16 @@ public class Account implements Serializable {
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
+	}
+	
+	
+
+	public Boolean getActivated() {
+		return activated;
+	}
+
+	public void setActivated(Boolean activated) {
+		this.activated = activated;
 	}
 
 	public List<Orders> getOrders() {

@@ -47,8 +47,6 @@ public class Product implements Serializable{
 	private String description;
 	@Column(name = "Discount")
 	private Integer discount;
-	@Column(name = "Available")
-	private Boolean available;
 	@ManyToOne
 	@JoinColumn(name = "CategoryId")
 	private Category category;
@@ -60,7 +58,7 @@ public class Product implements Serializable{
 	}
 	
 	public Product(Integer id, String name, String image1, String image2, String image3, String image4, String color,
-			Double price, Integer quantity, String manufactor, String description, Integer discount, Boolean available,
+			Double price, Integer quantity, String manufactor, String description, Integer discount,
 			Category category, List<OrdersDetail> ordersDetails) {
 		super();
 		this.id = id;
@@ -75,7 +73,6 @@ public class Product implements Serializable{
 		this.manufactor = manufactor;
 		this.description = description;
 		this.discount = discount;
-		this.available = available;
 		this.category = category;
 		this.ordersDetails = ordersDetails;
 	}
@@ -175,15 +172,6 @@ public class Product implements Serializable{
 	public void setDiscount(Integer discount) {
 		this.discount = discount;
 	}
-
-	public Boolean getAvailable() {
-		return available;
-	}
-
-	public void setAvailable(Boolean available) {
-		this.available = available;
-	}
-
 
 	public Category getCategory() {
 		return category;
