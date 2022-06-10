@@ -22,14 +22,14 @@ public class CartController {
 	ShoppingCartServiceImplement shoppingCart;
 	@Autowired
 	HttpServletRequest req;
-	
+
 	private static double newPrice;
-	
+
 	@ModelAttribute("shoppingCart")
 	public ShoppingCartServiceImplement getShoppingCart() {
 		return shoppingCart;
 	}
-	
+
 	@RequestMapping("/home/cart")
 	public String getCart(Model model) {
 //		model.addAttribute("shoppingCart", shoppingCart);
@@ -38,27 +38,34 @@ public class CartController {
 	}
 
 	@RequestMapping("/home/product-detail")
-	public String getProductDetail(Model model,@RequestParam("id") Integer id) {
+	public String getProductDetail(Model model, @RequestParam("id") Integer id) {
 		Product product = productRepository.findProductById(id);
 		newPrice = product.getPrice();
-		if(product.getDiscount() > 0) {
+		if (product.getDiscount() > 0) {
 			newPrice = product.getPrice() - (product.getPrice() * product.getDiscount() / 100);
 		}
 		model.addAttribute("newPrice", newPrice);
 		model.addAttribute("product", product);
 		return "home/product-detail";
 	}
-	
+
 	@RequestMapping("/home/cart/add/{id}")
-	public String addProductToCart(Model model,@PathVariable("id") Integer id) {
+	public String addProductToCart(Model model, @PathVariable("id") Integer id) {
 		int quantity = Integer.parseInt(req.getParameter("quantity"));
 		shoppingCart.add(id, quantity);
 		return "redirect:/home/cart";
 	}
-	
+
 	@RequestMapping("/home/cart/remove/{id}")
 	public String removeProductFromCart(@PathVariable("id") Integer id) {
 		shoppingCart.remove(id);
+		return "redirect:/home/cart";
+	}
+
+	@RequestMapping("/home/cart/update/{id}")
+	public String updateProductQuantity(@PathVariable("id") Integer id, 
+			@RequestParam("quantity") Integer quantity) {
+		shoppingCart.update(id, quantity);
 		return "redirect:/home/cart";
 	}
 }

@@ -184,19 +184,21 @@ body {
 		<div class="project">
 			<div class="shop">
 				<c:forEach var="product" items="${shoppingCart.products}">
-					<div class="box">
-						<img src="../images/product/${product.image1}"/>
-						<div class="content">
-							<h3>${product.name}</h3>
-							<h4>
-								<fmt:formatNumber value="${newPrice}" type="currency" currencySymbol="VND"></fmt:formatNumber>/1
-							</h4>
-							<p class="unit">Quantity: <input name="" value="${product.quantity}"/></p>
-							<p class="btn-area"><i aria-hidden="true" class="fa fa-trash"></i> <span class="btn2">
-								<a href="/home/cart/remove/${product.id}">Remove</a>
-							</span></p>
+					<form action="/home/cart/update/${product.id}" method="post">
+						<div class="box">
+							<img src="../images/product/${product.image1}"/>
+							<div class="content">
+								<h3>${product.name}</h3>
+								<h4>
+									<fmt:formatNumber value="${newPrice}" type="currency" currencySymbol="VND"></fmt:formatNumber>/1
+								</h4>
+								<p class="unit">Quantity: <input name="quantity" type="number" onchange="this.form.submit()" value="${product.quantity}"/></p>
+								<p class="btn-area"><i aria-hidden="true" class="fa fa-trash"></i> <span class="btn2">
+									<a href="/home/cart/remove/${product.id}">Remove</a>
+								</span></p>
+							</div>
 						</div>
-					</div>
+					</form>
 				</c:forEach>
 			</div>
 			<div class="right-bar">
