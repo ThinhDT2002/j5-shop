@@ -326,6 +326,92 @@ img {
 {
   color: var(--first-color) ;
 }
+.drop__down-menu{
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  
+}
+
+.drop__down-menu:hover .user {
+  display: block;
+}
+
+.user{
+  position: absolute;
+  background-color: var(--white-color);
+  list-style: none;
+  top: 33px;
+  right: -78px;
+  width: 200px;
+  display: none;
+  box-shadow: 0 1px 2.125rem 0 rgba(0, 0, 0, 0.2);
+}
+
+.user::after{
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background: var(--white-color);
+  right: 85px;
+  top: -10px;
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+.user li{
+  line-height: 40px;
+  padding: 8px 20px;
+  cursor: pointer;
+
+}
+
+.user li span{
+  font-size: 15px;
+}
+
+.user ul{
+  position: static;
+}
+
+.user input{
+  display: none;
+}
+
+[id^=btn]:checked + ul li {
+  display: block;
+}
+
+.user ul li{
+  line-height: 30px;
+  padding-left: 30px;
+  border-bottom: none;
+  display: none;
+}
+
+.user ul li a{
+  color: var(--text-color);
+  font-size: 15px;
+}
+
+.user li label{
+  font-size: 18px;
+  color: var(--text-color);
+}
+
+.user li a{
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.user li a:hover,
+.user li label:hover
+{
+  color: var(--first-color) ;
+}
 /*===== CART =====*/
 .header__cart{
   text-align: center;
@@ -724,6 +810,7 @@ text-align: center;
 .footer{
   background-color: var(--dark-color);
   color: var(--white-color);
+  margin-top: 20px
 }
 
 .footer__container{
@@ -879,6 +966,20 @@ right: 3px;
   .home__img{
     right: 15%;
   }
+  .featured__img{
+  	width: 230px;
+  	height: 260px
+  }
+  .btn-changepage{
+   display: flex;
+   justify-content:space-between;
+   align-items: center;
+   width: 50%;
+   margin-left: 25%;
+  }
+  .btn-changepage a:hover  {
+	color: orange;
+}
 }
 
 	
@@ -919,25 +1020,6 @@ function linkAction(){
 
 navLink.forEach(n => n.addEventListener('click', linkAction))
 
-/*===== next image silde product =====*/
-const imgs = document.querySelectorAll('.img-select a');
-    const imgBtns = [...imgs];
-    let imgId = 1;
 
-    imgBtns.forEach((imgItem) => {
-        imgItem.addEventListener('click', (event) => {
-            event.preventDefault();
-            imgId = imgItem.dataset.id;
-            slideImage();
-        });
-    });
-
-    function slideImage(){
-        const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-
-        document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
-    }
-
-    window.addEventListener('resize', slideImage);
 </script>
 </html>

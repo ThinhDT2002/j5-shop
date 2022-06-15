@@ -36,6 +36,11 @@ public class CartController {
 		model.addAttribute("newPrice", newPrice);
 		return "home/cart";
 	}
+	
+	@RequestMapping("/home/profilecard")
+	public String getCard(Model model) {
+		return "home/profilecard";
+	}
 
 	@RequestMapping("/home/product-detail")
 	public String getProductDetail(Model model, @RequestParam("id") Integer id) {

@@ -71,10 +71,7 @@
                 			</div>
                 		</span>
                 	</c:forEach>
-                	<a class="btn btn-primary offset-3" href="/home/index?p=0&category=${category}">First</a>
-					<a class="btn btn-primary" href="/home/index?p=${products.number-1}&category=${category}">Previous</a>
-					<a class="btn btn-primary" href="/home/index?p=${products.number+1}&category=${category}">Next</a>
-					<a class="btn btn-primary" href="/home/index?p=${products.totalPages-1}&category=${category}">Last</a>
+                	
                 	<!--  
                     <a href="/home/product-detail">
                         <span>
@@ -180,7 +177,13 @@
                 </div>
                 
             </section>
-
+            <div class="btn-changepage">
+            <a class="btn btn-primary offset-3" href="/home/index?p=0&category=${category}">First</a>
+					<a class="btn btn-primary" href="/home/index?p=${products.number-1}&category=${category}">Previous</a>
+					<a class="btn btn-primary" href="/home/index?p=${products.number+1}&category=${category}">Next</a>
+					<a class="btn btn-primary" href="/home/index?p=${products.totalPages-1}&category=${category}">Last</a>
+            </div>
+					
             <!--===== OFFER =====-->
             <section class="offer section">
                 <div class="offer__bg">

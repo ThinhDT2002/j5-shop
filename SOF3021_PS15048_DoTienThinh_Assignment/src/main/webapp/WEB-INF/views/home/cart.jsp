@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Responsive Shopping Cart design</title>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
 	<style type="text/css">
 		* {
 	margin: 0;
@@ -41,8 +42,13 @@ body {
 				-14px 14px 20px rgba(0, 0, 0, 0.6)
 	;
 }
+.address__input{
+	margin-bottom: 20px;
+	width: 50%;
+	height: 10%;
+}
 .wrapper {
-	max-width: 1000px;
+	max-width: 1200px;
 	margin: 0 auto;
 }
 .wrapper h1 {
@@ -125,7 +131,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 30px;
-	font-size: 20px;
+	font-size: 18px;
 }
 .right-bar a {
 	background-color: #76bfb6;
@@ -201,7 +207,7 @@ body {
 				</c:forEach>
 			</div>
 			<div class="right-bar">
-				<p><span>Subtotal   </span> <span>
+				<p><span>Subtotal</span> <span>
 					<fmt:formatNumber value="${shoppingCart.amount}" type="currency" currencySymbol="VND"></fmt:formatNumber>
 				</span></p>
 				<hr>
@@ -217,6 +223,16 @@ body {
 					<fmt:formatNumber value="${shoppingCart.amount + shoppingCart.tax + shoppingCart.shipping}" type="currency" currencySymbol="VND"></fmt:formatNumber>
 				</span></p><a href="#"><i class="fa fa-shopping-cart"></i>Checkout</a>
 			</div>
+		</div>
+		<div class="right-bar" style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 60px">
+			<p><span>Delivery address</span></p>
+			<input type="text" name="" id="" class="address__input">
+			<hr>
+			<p><span>Pick-up phone number</span></p>
+			<input type="text" name="" id="" class="address__input">
+			<hr>
+			<p><span>replacement recipient's name (if any)</span></p>
+			<input type="text" name="" id="" class="address__input">
 		</div>
 	</div>
 </body>

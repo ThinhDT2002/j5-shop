@@ -73,7 +73,7 @@
                                 <!-- Cart item -->
                                 <c:forEach var="product" items="${shoppingCart.products}">
                                 	<li class="header__cart-item">
-                                		<img src="../images/product/${product.image1}"/>
+                                		<img class="header__cart-img" src="../images/product/${product.image1}"/>
                                 		<div class="header__cart-item-info">
                                 			<div class="header__cart-item-head">
                                 				<h5 class="header__cart-item-name">${product.name}</h5>
@@ -148,15 +148,24 @@
                                 </li>
                                 -->
                             </ul>
+                            <a href="/home/cart" class="header__cart-view-cart">
                             <div class="btn__view-cart">
-                                <a href="/home/cart" class="header__cart-view-cart">View cart</a>
+                                View cart
                             </div>
-                            
+                            </a>
                         </div>
                     </div>
-                    <a href="/account/login"><span><i class='bx bxs-user'></i></span></a>   
+                    <div class="drop__down-menu">
+                    <span><i class='bx bxs-user'></i></span>
+                    <ul class="user">
+                        <li><a href="/account/login">Đăng nhập</a></li>
+                        <li><a href="/account/login">Đăng ký</a></li>
+                        <li><a href="/home/profilecard">Thông tin tài khoản</a></li>
+                    </ul>
+                </div>   
                     
                 </div>
+                <h5>tên tài khoản</h5>
                 <i class='bx bx-menu nav__toggle' id="nav-toggle" ></i>
                 
             </nav>
