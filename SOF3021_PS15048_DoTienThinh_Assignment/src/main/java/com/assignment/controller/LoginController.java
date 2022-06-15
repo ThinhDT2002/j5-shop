@@ -1,6 +1,8 @@
 package com.assignment.controller;
 
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -97,6 +99,62 @@ public class LoginController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "/account/verifyError";
+		}
+	}
+	
+	@RequestMapping("/account/logout")
+	public String logout() {
+		sessionService.removeAttribute("user");
+		return "/account/login";
+	}
+	
+	@RequestMapping("/account/forgot-password")
+	public String getForgotPassword() {
+		return "/account/forgot-password";
+	}
+	
+	private String retrievePasswordVerifycode = "";
+	private String currentUsernameForgotPassword = "";
+	
+	@RequestMapping("/account/retrieve-password")
+	public String retrievePasword(Model model,@RequestParam("username") String username){
+		try {
+			Account account = accountRepository.findAccountByUsername(username);
+			currentUsernameForgotPassword = username;
+			MailInformation mailInformation = new MailInformation();
+			mailInformation.setTo(account.getEmail());
+			mailInformation.setSubject("Quên mật khẩu");
+			String verifyCode = String.valueOf(passwordUtil.generatePassword(6));
+			retrievePasswordVerifycode = verifyCode;
+			mailInformation.setBody("Mã xác nhận của bạn là: \r\n" + verifyCode);
+			mailServiceImplement.send(mailInformation);
+			model.addAttribute("message","Mã xác nhận đã được gửi đi, vuii lòng kiểm tra email của bạn!");
+			return "account/retrieve-password";
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			model.addAttribute("message","Có lỗi xảy ra");
+			return "account/forgot-password";
+		}
+	}
+	
+	@RequestMapping("/account/submit-retrieve-password")
+	public String submitNewPassword(Model model, @RequestParam("verifyCode") String verifyCode,
+			@RequestParam("password") String password,
+			@RequestParam("confirm-password") String confirmPassword) {
+		if(!verifyCode.equals(retrievePasswordVerifycode)) {
+			model.addAttribute("message","Verify code incorrect!");
+			return "account/retrieve-password";
+		} else {
+			if(!password.equals(confirmPassword)) {
+				model.addAttribute("message","Confirm password is incorrect!");
+				return "account/retrieve-password";
+			} else {
+				Account account = accountRepository.findAccountByUsername(currentUsernameForgotPassword);
+				account.setPassword(password);
+				accountRepository.save(account);
+				model.addAttribute("message","Recovery password success!");
+				return "account/retrieve-password";
+			}
 		}
 	}
 }

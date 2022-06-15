@@ -432,6 +432,7 @@ form.sign-in-form {
               <input type="password" name="login-password" placeholder="Mật khẩu" />
             </div>
             <input type="submit" value="Đăng nhập" class="btn solid" />
+            <a href="/account/forgot-password" class="btn btn-solid">Quên mật khẩu</a>
             <p class="social-text">Hoặc Đăng nhập bằng các nền tảng xã hội</p>
             <div class="social-media">
               <a href="https://www.facebook.com/anhngoc.duyan" class="social-icon">
