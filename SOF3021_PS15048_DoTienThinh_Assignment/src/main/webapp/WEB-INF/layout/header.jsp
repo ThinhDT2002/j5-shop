@@ -170,7 +170,7 @@
                         		<li><a href="/home/admin">Quản lý website</a></li>
                         	</c:if>
                         	<c:if test="${!user.admin}">
-                        		<li><a href="/home/history">Lịch sử mua hàng</a></li>
+                        		<li><a href="/home/order">Lịch sử mua hàng</a></li>
                         	</c:if>
                     	</c:if>
                     </ul>
