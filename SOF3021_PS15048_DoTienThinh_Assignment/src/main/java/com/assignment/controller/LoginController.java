@@ -1,7 +1,10 @@
 package com.assignment.controller;
 
 
+import java.io.File;
+
 import javax.mail.MessagingException;
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.assignment.model.Account;
 import com.assignment.model.MailInformation;
@@ -38,6 +42,10 @@ public class LoginController {
 	PasswordUtil passwordUtil;
 	@Autowired
 	ShoppingCartServiceImplement shoppingCart;
+	@Autowired
+	ServletContext context;
+	
+	private static final String URL_PHOTO = System.getProperty("user.dir") + "/src/main/webapp/images/account/";
 	
 	@ModelAttribute("shoppingCart")
 	public ShoppingCartServiceImplement getShoppingCart() {
@@ -77,24 +85,56 @@ public class LoginController {
 			@RequestParam("sign-up-email") String email,
 			@RequestParam("sign-up-password") String password) {
 		try {
-			Account account = new Account();
-			account.setUsername(username);
-			account.setPassword(password);
-			account.setEmail(email);
-			account.setAdmin(false);
-			accountRepository.save(account);
-			String verifyCode = username + String.valueOf(passwordUtil.generatePassword(8));
-			VerifyAccount verifyAccount = new VerifyAccount(username, account, verifyCode);
-			verifyAccountRepository.save(verifyAccount);
-			MailInformation mailInformation = new MailInformation();
-			mailInformation.setTo(email);
-			String verifyURL = "http://localhost:8080/account/verify?code=" + verifyCode;
-			String subject = "Xác nhận tài khoản";
-			String mailMessage = "Click vào đây để kích hoạt tài khoản của bạn: \r\n"+ verifyURL;
-			mailInformation.setSubject(subject);
-			mailInformation.setBody(mailMessage);
-			mailServiceImplement.send(mailInformation);
-			model.addAttribute("message","Đăng ký thành công, truy cập vào email để xác nhận tài khoản");
+			Account existAccount = accountRepository.findAccountByUsername(username);
+			if(existAccount != null) {
+				if(existAccount.getActivated()) {
+					model.addAttribute("message","Tài khoản đã tồn tại!");
+					return "account/login";
+				}
+				else {
+					VerifyAccount verifyAccountExist = verifyAccountRepository.findVerifyAccountByUsername(username);
+					verifyAccountRepository.delete(verifyAccountExist);
+					Account account = new Account();
+					account.setUsername(username);
+					account.setPassword(password);
+					account.setEmail(email);
+					account.setAdmin(false);
+					accountRepository.save(account);
+					String verifyCode = username + String.valueOf(passwordUtil.generatePassword(8));
+					VerifyAccount verifyAccount = new VerifyAccount(username, account, verifyCode);
+					verifyAccountRepository.save(verifyAccount);
+					MailInformation mailInformation = new MailInformation();
+					mailInformation.setTo(email);
+					String verifyURL = "http://localhost:8080/account/verify?code=" + verifyCode;
+					String subject = "Xác nhận tài khoản";
+					String mailMessage = "Click vào đây để kích hoạt tài khoản của bạn: \r\n"+ verifyURL;
+					mailInformation.setSubject(subject);
+					mailInformation.setBody(mailMessage);
+					mailServiceImplement.send(mailInformation);
+					model.addAttribute("message","Đăng ký thành công, truy cập vào email để xác nhận tài khoản");
+					return "account/login";
+				}
+			} 
+			else {
+				Account account = new Account();
+				account.setUsername(username);
+				account.setPassword(password);
+				account.setEmail(email);
+				account.setAdmin(false);
+				accountRepository.save(account);
+				String verifyCode = username + String.valueOf(passwordUtil.generatePassword(8));
+				VerifyAccount verifyAccount = new VerifyAccount(username, account, verifyCode);
+				verifyAccountRepository.save(verifyAccount);
+				MailInformation mailInformation = new MailInformation();
+				mailInformation.setTo(email);
+				String verifyURL = "http://localhost:8080/account/verify?code=" + verifyCode;
+				String subject = "Xác nhận tài khoản";
+				String mailMessage = "Click vào đây để kích hoạt tài khoản của bạn: \r\n"+ verifyURL;
+				mailInformation.setSubject(subject);
+				mailInformation.setBody(mailMessage);
+				mailServiceImplement.send(mailInformation);
+				model.addAttribute("message","Đăng ký thành công, truy cập vào email để xác nhận tài khoản");
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			model.addAttribute("message","Đăng ký thất bại!");
@@ -201,9 +241,45 @@ public class LoginController {
 			return "account/changePassword";
 		}
 	}
-	
+		
 	@GetMapping("/account/profilecard")
-	public String getProfileView() {
+	public String getProfileView(@ModelAttribute("account") Account account) {
+		Account curUser = sessionService.getAttribute("user");
+		account.setUsername(curUser.getUsername());
+		account.setPassword(curUser.getPassword());
+		account.setEmail(curUser.getEmail());
+		account.setFullname(curUser.getFullname());
+		account.setPhonenumber(curUser.getPhonenumber());
+		return "account/profilecard";
+	}
+	
+	@PostMapping("/account/profilecard")
+	public String updateAccount(@ModelAttribute("account") Account account,
+			@RequestParam("avatar") MultipartFile multipartFile, Model model) {
+		Account curUser = sessionService.getAttribute("user");
+		try {
+			account.setUsername(curUser.getUsername());
+			account.setPassword(curUser.getPassword());
+			account.setEmail(account.getEmail());
+			account.setFullname(account.getFullname());
+			account.setPhonenumber(account.getPhonenumber());
+			account.setActivated(curUser.getActivated());
+			if(!multipartFile.isEmpty()) {
+				String filename = multipartFile.getOriginalFilename();
+				File file = new File(URL_PHOTO + filename);
+				if(!file.exists()) {
+					file.mkdirs();
+				}
+				multipartFile.transferTo(file);
+				account.setPhoto(filename);	
+			}
+			accountRepository.save(account);
+			sessionService.setAttribute("user", account);
+			model.addAttribute("updateAccountMessage","Update account success!");
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			model.addAttribute("updateAccountMessage","Update account failed!");
+		}
 		return "account/profilecard";
 	}
 }

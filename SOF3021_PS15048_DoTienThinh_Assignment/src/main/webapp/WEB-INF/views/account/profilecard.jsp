@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,48 +29,50 @@
 </head>
 <body class="bg-light">
 	<div class="container">
+	<form:form action="/account/profilecard" modelAttribute="account" enctype="multipart/form-data">
 		<div class="row d-flex justify-content-center">
 			<div class="col-md-10 mt-5 pt-5">
 				<div class="row z-depth-3">
 					<div class="col-sm-4 bg-info rounded-left">
 						<div class="card-block text-center text-white">
-							<span><img src="assets/img/logo1-old.png" alt="" style="margin-top: 100px;"></span>
+							<span><img src="../images/account/${user.photo}" alt="${user.photo}" style="margin-top: 100px;"></span>
 						</div>
-						<button>Lưu thông tin</button>
+						<button type="submit">Lưu thông tin</button>
 					</div>
+					
 					<div class="col-sm-8 bg-white rounded-right">
 						<h3 class="mt-3 text-center">Information</h3>
 						<hr class="bg-primary mt-0 w-25">
 						<div class="row">
 							<div class="col-sm-6">
 								<p class="font-weight-bold">Username:</p>
-								<input type="text"></input>
+								<form:input type="text" path="username" disabled="true"/>
 							</div>
 							<div class="col-sm-6">
 								<p class="font-weight-bold">Password:</p>
-								<input type="password"></input>
+								<form:input type="password" path="password" disabled="true"/>
 							</div>
 						</div>
 						<hr class="bg-primary">
 						<div class="row">
 							<div class="col-sm-6">
 								<p class="font-weight-bold">Fullname:</p>
-								<input type="text"></input>
+								<form:input type="text" path="fullname"/>
 							</div>
 							<div class="col-sm-6">
 								<p class="font-weight-bold">Phonenumber:</p>
-								<input type="text"></input>
+								<form:input type="text" path="phonenumber"/>
 							</div>
 						</div>
 						<hr class="bg-primary">
 						<div class="row">
 							<div class="col-sm-6">
 								<p class="font-weight-bold">Email:</p>
-								<input type="email"></input>
+								<form:input type="email" path="email"/>
 							</div>
 							<div class="col-sm-6">
 								<p class="font-weight-bold">Photo:</p>
-								<input type="file"></input>
+								<input type="file" name="avatar"></input>
 							</div>
 						</div>
 						<hr class="bg-primary">
@@ -78,9 +82,12 @@
 							<li><a href="#!"><i class="fab fa-twitter px-3 h4 text-info"></i></a></li>
 						</ul>
 					</div>
+					
 				</div>
 			</div>
 		</div>
+			</form:form>
 	</div>
+
 </body>
 </html>
