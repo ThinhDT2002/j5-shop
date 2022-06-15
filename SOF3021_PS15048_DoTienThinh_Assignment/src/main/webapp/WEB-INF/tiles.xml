@@ -13,4 +13,10 @@
 	<definition name="home/*" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/home/{1}.jsp"></put-attribute>
 	</definition>
+	<definition name="account/changePassword" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/account/changePassword.jsp"></put-attribute>
+	</definition>
+	<definition name="account/profilecard" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/account/profilecard.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

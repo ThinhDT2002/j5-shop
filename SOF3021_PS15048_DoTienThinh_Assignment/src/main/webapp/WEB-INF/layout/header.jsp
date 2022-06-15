@@ -164,6 +164,7 @@
                     	</c:if>
   	                    <c:if test="${user != null }">
                         	<li><a href="/account/profilecard">Tài khoản</a></li>
+                        	<li><a href="/account/changePassword">Đổi mật khẩu</a></li>
                         	<li><a href="/account/logout">Đăng xuất</a></li>
                         	<c:if test="${user.admin}">
                         		<li><a href="/home/admin">Quản lý website</a></li>

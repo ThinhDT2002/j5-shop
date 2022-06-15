@@ -50,4 +50,9 @@ public class HomeController {
 		Account account = sessionService.getAttribute("user");
 		return account;
 	}
+	
+	@RequestMapping("/home/admin")
+	public String getAdminPage() {
+		return "home/admin";
+	}
 }

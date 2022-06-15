@@ -6,7 +6,11 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.assignment.model.Account;
@@ -16,6 +20,7 @@ import com.assignment.service.database.AccountRepository;
 import com.assignment.service.database.VerifyAccountRepository;
 import com.assignment.service.mail.MailServiceImplement;
 import com.assignment.service.session.SessionService;
+import com.assignment.service.shoppingCart.ShoppingCartServiceImplement;
 import com.assignment.util.password.PasswordUtil;
 
 
@@ -31,11 +36,19 @@ public class LoginController {
 	MailServiceImplement mailServiceImplement;
 	@Autowired
 	PasswordUtil passwordUtil;
+	@Autowired
+	ShoppingCartServiceImplement shoppingCart;
+	
+	@ModelAttribute("shoppingCart")
+	public ShoppingCartServiceImplement getShoppingCart() {
+		return shoppingCart;
+	}
 	
 	@RequestMapping("/account/login")
 	public String getLogin() {
 		return "account/login";
 	}
+	
 	@RequestMapping("/account/doLogin")
 	public String doLogin(Model model,@RequestParam("login-username") String username,
 			@RequestParam("login-password") String password) {
@@ -105,7 +118,7 @@ public class LoginController {
 	@RequestMapping("/account/logout")
 	public String logout() {
 		sessionService.removeAttribute("user");
-		return "/account/login";
+		return "redirect:/account/login";
 	}
 	
 	@RequestMapping("/account/forgot-password")
@@ -156,5 +169,41 @@ public class LoginController {
 				return "account/retrieve-password";
 			}
 		}
+	}
+	
+	@GetMapping("/account/changePassword")
+	public String getChangePasswordView() {
+		return "account/changePassword";
+	}
+	
+	@PostMapping("/account/changePassword")
+	public String doChangePassword(Model model, @RequestParam("oldPassword") String oldPassword,
+			@RequestParam("newPassword") String newPassword,
+			@RequestParam("confirmPassword") String confirmPassword) {
+		Account account = sessionService.getAttribute("user");
+		if(account != null) {
+			if(!account.getPassword().equals(oldPassword)) {
+				model.addAttribute("changePasswordMessage","Password is incorrect!");
+				return "account/changePassword";
+			} 
+			else if(!newPassword.equals(confirmPassword)){
+				model.addAttribute("changePasswordMessage","Confirm password is incorrect!");
+				return "account/changePassword";
+			}
+			else {
+				account.setPassword(newPassword);
+				accountRepository.save(account);
+				model.addAttribute("changePasswordMessage", "Change password success!");
+				return "account/changePassword";
+			}
+		} else {
+			model.addAttribute("changePasswordMessage", "No account found!");
+			return "account/changePassword";
+		}
+	}
+	
+	@GetMapping("/account/profilecard")
+	public String getProfileView() {
+		return "account/profilecard";
 	}
 }
