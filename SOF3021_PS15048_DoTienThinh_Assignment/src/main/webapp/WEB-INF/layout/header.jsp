@@ -176,7 +176,7 @@
                 </div>   
                     
                 </div>
-                <h5>${user.fullname}</h5>
+                <h5>${user.fullname == null ? user.username : user.fullname}</h5>
                 <i class='bx bx-menu nav__toggle' id="nav-toggle" ></i>
                 
             </nav>

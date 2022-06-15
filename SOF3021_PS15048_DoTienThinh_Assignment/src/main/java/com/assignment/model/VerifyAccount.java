@@ -1,5 +1,6 @@
 package com.assignment.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,7 +15,7 @@ public class VerifyAccount {
 	@Id
 	@Column(unique = true, name="Username")
 	private String username;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@MapsId
 	@JoinColumn(name = "Username")
 	private Account account;

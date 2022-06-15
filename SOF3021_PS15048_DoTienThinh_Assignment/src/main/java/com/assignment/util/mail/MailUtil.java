@@ -3,8 +3,9 @@ package com.assignment.util.mail;
 import java.io.File;
 import java.io.IOException;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+@Service
 public class MailUtil {
 	public String[] parseStringEmailToArray(String emailString) {
 		String[] arrEmail = null;
