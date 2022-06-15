@@ -3,10 +3,13 @@ package com.assignment.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -34,9 +37,35 @@ public class Account implements Serializable {
 	@Column(name = "Admin")
 	private Boolean admin;
 	@Column(name = "Activated")
-	private Boolean activated;
+	private Boolean activated = false;
 	@OneToMany(mappedBy = "account")
 	private List<Orders> orders;
+	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private VerifyAccount verifyAccount;
+
+	public VerifyAccount getVerifyAccount() {
+		return verifyAccount;
+	}
+
+	public void setVerifyAccount(VerifyAccount verifyAccount) {
+		this.verifyAccount = verifyAccount;
+	}
+
+	public Account(String username, String password, String fullname, String phonenumber, String email, String photo,
+			Boolean admin, Boolean activated, List<Orders> orders, VerifyAccount verifyAccount) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.fullname = fullname;
+		this.phonenumber = phonenumber;
+		this.email = email;
+		this.photo = photo;
+		this.admin = admin;
+		this.activated = activated;
+		this.orders = orders;
+		this.verifyAccount = verifyAccount;
+	}
 
 	public Account() {
 		super();

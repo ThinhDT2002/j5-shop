@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.assignment.model.Product;
-import com.assignment.service.ProductRepository;
-import com.assignment.service.ShoppingCartServiceImplement;
+import com.assignment.service.database.ProductRepository;
+import com.assignment.service.shoppingCart.ShoppingCartServiceImplement;
 
 @Controller
 public class CartController {

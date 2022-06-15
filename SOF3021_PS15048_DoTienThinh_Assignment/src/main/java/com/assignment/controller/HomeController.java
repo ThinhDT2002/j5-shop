@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.assignment.model.Account;
 import com.assignment.model.Product;
-import com.assignment.service.ProductRepository;
-import com.assignment.service.SessionService;
-import com.assignment.service.ShoppingCartServiceImplement;
+import com.assignment.service.database.ProductRepository;
+import com.assignment.service.session.SessionService;
+import com.assignment.service.shoppingCart.ShoppingCartServiceImplement;
 
 @Controller
 public class HomeController {
@@ -43,5 +43,11 @@ public class HomeController {
 //		Account account = sessionService.getAttribute("user");
 //		System.out.println(account.getFullname());
 		return "home/index";
+	}
+	
+	@ModelAttribute("user")
+	public Account getCurrentUser() {
+		Account account = sessionService.getAttribute("user");
+		return account;
 	}
 }

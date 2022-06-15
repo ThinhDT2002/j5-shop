@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.assignment.model.Account;
-import com.assignment.service.AccountRepository;
-import com.assignment.service.SessionService;
+import com.assignment.service.database.AccountRepository;
+import com.assignment.service.session.SessionService;
 
 @Controller
 public class LoginController {
@@ -37,4 +37,12 @@ public class LoginController {
 			}
 		}
 	}
+	
+//	@RequestMapping("/account/doSignup")
+//	public String doSignUp(Model model, @RequestParam("sign-up-username") String username,
+//			@RequestParam("sign-up-email") String email,
+//			@RequestParam("sign-up-password") String password) {
+//		
+//	}
+	
 }

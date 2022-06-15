@@ -158,14 +158,25 @@
                     <div class="drop__down-menu">
                     <span><i class='bx bxs-user'></i></span>
                     <ul class="user">
-                        <li><a href="/account/login">Đăng nhập</a></li>
-                        <li><a href="/account/login">Đăng ký</a></li>
-                        <li><a href="/home/profilecard">Thông tin tài khoản</a></li>
+                    	<c:if test="${user == null }">
+                        	<li><a href="/account/login">Đăng nhập</a></li>
+                        	<li><a href="/account/login">Đăng ký</a></li>
+                    	</c:if>
+  	                    <c:if test="${user != null }">
+                        	<li><a href="/account/profilecard">Tài khoản</a></li>
+                        	<li><a href="/account/logout">Đăng xuất</a></li>
+                        	<c:if test="${user.admin}">
+                        		<li><a href="/home/admin">Quản lý website</a></li>
+                        	</c:if>
+                        	<c:if test="${!user.admin}">
+                        		<li><a href="/home/history">Lịch sử mua hàng</a></li>
+                        	</c:if>
+                    	</c:if>
                     </ul>
                 </div>   
                     
                 </div>
-                <h5>tên tài khoản</h5>
+                <h5>${user.fullname}</h5>
                 <i class='bx bx-menu nav__toggle' id="nav-toggle" ></i>
                 
             </nav>
