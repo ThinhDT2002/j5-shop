@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -698,7 +701,7 @@ button:hover {
                 <div class="activity-data">
                     <div class="data names">
                         <span class="data-title">OrderID</span>
-                        <span class="data-list">1</span>
+                        <span class="data-list">${userr.id}</span>
                         <span class="data-list">2</span>
                         <span class="data-list">3</span>
                         <span class="data-list">4</span>
@@ -741,176 +744,115 @@ button:hover {
         </div>
 
         <div class="dash-content" id="product">
-
-
             <div class="activity">
                 <div class="title">
                     <i class='bx bx-box' ></i>
                     <span class="text">Product</span>
                 </div>
-
                 <div class="activity-data">
-                    <div class="data names">
-                        <span class="data-title" style="width: 120px;">Product ID</span>
-                        <span class="data-list">1</span>
-                        <span class="data-list">2</span>
-                        <span class="data-list">3</span>
-                        <span class="data-list">4</span>
-                        <span class="data-list">5</span>
-                        <span class="data-list">6</span>
-                        <span class="data-list">7</span>
-                    </div>
+                
+				
+					<div class="data names">
+					
+                    <span class="data-title" style="width: 120px;" >Product ID</span>
+                    <c:forEach var="product" items="${products}">
+                        <span class="data-list">${product.id}</span>
+                        </c:forEach>
+                    </div>             
+                    
                     <div class="data email">
                         <span class="data-title">Name</span>
-                        <span class="data-list">Iphone12</span>
-                        <span class="data-list">Iphone12</span>
-                        <span class="data-list">Iphone12</span>
-                        <span class="data-list">Iphone12</span>
-                        <span class="data-list">Iphone12</span>
-                        <span class="data-list">Iphone12</span>
-                        <span class="data-list">Iphone12</span>
+                        <c:forEach var="product" items="${products}">
+                        <span class="data-list">${product.name}</span>
+                        </c:forEach>
                     </div>
-                    <div class="data joined">
+                    
+                    	<div class="data joined">
                         <span class="data-title">Image1</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
+                        <c:forEach var="product" items="${products}">
+                        <img src="../images/product/${product.image1}"/>
+                        </c:forEach>
                     </div>
+                    
                     <div class="data type">
                         <span class="data-title">Image2</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
+                        <c:forEach var="product" items="${products}">
+                        	<img src="../images/product/${product.image2}"/>
+                        </c:forEach>
                     </div>
                     <div class="data status">
-                        <span class="data-title">Image3</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
+                    	<span class="data-title">Image3</span>
+                        <c:forEach var="product" items="${products}">
+                        	<img src="../images/product/${product.image3}"/>
+                        </c:forEach>
+                        
                     </div>
                     <div class="data status">
                         <span class="data-title">Image4</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
-                        <span class="data-list">iphone12.png</span>
+                        <c:forEach var="product" items="${products}">
+                        	<img src="../images/product/${product.image4}"/>
+                        </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Color</span>
-                        <span class="data-list">White</span>
-                        <span class="data-list">White</span>
-                        <span class="data-list">White</span>
-                        <span class="data-list">White</span>
-                        <span class="data-list">White</span>
-                        <span class="data-list">White</span>
-                        <span class="data-list">White</span>
+                        <c:forEach var="product" items="${products}">
+                        	<span class="data-list">${product.color}</span>
+                        </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Price</span>
-                        <span class="data-list">110.000</span>
-                        <span class="data-list">110.000</span>
-                        <span class="data-list">110.000</span>
-                        <span class="data-list">110.000</span>
-                        <span class="data-list">110.000</span>
-                        <span class="data-list">110.000</span>
-                        <span class="data-list">110.000</span>
+                        <c:forEach var="product" items="${products}">
+                        	<span class="data-list">${product.price}</span>
+                        </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Quantity</span>
-                        <span class="data-list">10</span>
-                        <span class="data-list">10</span>
-                        <span class="data-list">10</span>
-                        <span class="data-list">10</span>
-                        <span class="data-list">10</span>
-                        <span class="data-list">10</span>
-                        <span class="data-list">10</span>
+                        <c:forEach var="product" items="${products}">
+                        	<span class="data-list">${product.quantity}</span>
+                        </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Manufactor</span>
-                        <span class="data-list">Apple</span>
-                        <span class="data-list">Apple</span>
-                        <span class="data-list">Apple</span>
-                        <span class="data-list">Apple</span>
-                        <span class="data-list">Apple</span>
-                        <span class="data-list">Apple</span>
-                        <span class="data-list">Apple</span>
+                        <c:forEach var="product" items="${products}">
+                        	<span class="data-list">${product.manufactor}</span>
+                        </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Description</span>
-                        <span class="data-list">Like new</span>
-                        <span class="data-list">Like new</span>
-                        <span class="data-list">Like new</span>
-                        <span class="data-list">Like new</span>
-                        <span class="data-list">Like new</span>
-                        <span class="data-list">Like new</span>
-                        <span class="data-list">Like new</span>
+                        <c:forEach var="product" items="${products}">
+                        	<span class="data-list">${product.description}</span>
+                        </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Discount</span>
-                        <span class="data-list">20%</span>
-                        <span class="data-list">20%</span>
-                        <span class="data-list">20%</span>
-                        <span class="data-list">20%</span>
-                        <span class="data-list">20%</span>
-                        <span class="data-list">20%</span>
-                        <span class="data-list">20%</span>
+                        <c:forEach var="product" items="${products}">
+                        	<span class="data-list">${product.discount}</span>
+                        </c:forEach>
                     </div>
-                    <div class="data status">
-                        <span class="data-title">Available</span>
-                        <span class="data-list">Còn hàng</span>
-                        <span class="data-list">Còn hàng</span>
-                        <span class="data-list">Còn hàng</span>
-                        <span class="data-list">Còn hàng</span>
-                        <span class="data-list">Còn hàng</span>
-                        <span class="data-list">Còn hàng</span>
-                        <span class="data-list">Còn hàng</span>
-                    </div>
+                    
                     <div class="data status">
                         <span class="data-title">Category_Id</span>
-                        <span class="data-list">1</span>
-                        <span class="data-list">2</span>
-                        <span class="data-list">3</span>
-                        <span class="data-list">4</span>
-                        <span class="data-list">5</span>
-                        <span class="data-list">6</span>
-                        <span class="data-list">7</span>
+                        <c:forEach var="product" items="${products}">
+                        	<span class="data-list">${product.category.id}</span>
+                        </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Edit</span>
-                        <span class="data-list"><button>Sửa</button></span>
-                        <span class="data-list"><button>Sửa</button></span>
-                        <span class="data-list"><button>Sửa</button></span>
-                        <span class="data-list"><button>Sửa</button></span>
-                        <span class="data-list"><button>Sửa</button></span>
-                        <span class="data-list"><button>Sửa</button></span>
-                        <span class="data-list"><button>Sửa</button></span>
+                        <c:forEach var="product" items="${products}">
+                        <span class="data-title"><a href="/home/admin/edit/${product.id}">Edit</a></span>                        	
+                        </c:forEach>                                                         
                     </div>
                     <div class="data status">
                         <span class="data-title">Delete</span>
-                        <span class="data-list"><button>Xoá</button></span>
-                        <span class="data-list"><button>Xoá</button></span>
-                        <span class="data-list"><button>Xoá</button></span>
-                        <span class="data-list"><button>Xoá</button></span>
-                        <span class="data-list"><button>Xoá</button></span>
-                        <span class="data-list"><button>Xoá</button></span>
-                        <span class="data-list"><button>Xoá</button></span>
+                        <c:forEach var="product" items="${products}">
+                        <form:form action="/home/admin" modelAttribute="product" enctype="multipart/form-data">
+                        	<span class="data-list"><a href="/home/admin/delete/${product.id}">Delete</a></span>
+                        	</form:form>
+                        </c:forEach>
                     </div>
+                    
                 </div>
+                
             </div>
             <div class="activity">
                 <div class="title">
@@ -918,213 +860,157 @@ button:hover {
                     <span class="text">Thêm sản phẩm</span>
                 </div>
                 <div class="activity-data">
-                    <form action="#">
-                        <label for="">Product ID</label>
+                    <form:form action="/home/admin" modelAttribute="product" enctype="multipart/form-data">
+                        <label for="floatingProductId">Product ID</label>
                         <div class="dbl-field">
-                            <div class="field">
-                                <input type="text" name="ProductID" placeholder="Product ID" >
+                            <div class="field"> 
+                                <form:input id="floatingProductId" path="id" placeholder="Product ID" />
                                 <i class='fas fa-user'></i>
                             </div>
                         </div>
-                        <label for="">Name</label>
+                        <label for="floatProductName">Name</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="text" name="Name" placeholder="Name">
+                                <form:input id="floatProductName" path="name" placeholder="Name" />
                                 <i class='fas fa-envelope'></i>
                             </div>
                         </div>
-                        <label for="">Image1</label>
+                        <label for="file-Image1">Image1</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="Image1" placeholder="Image1">
+                                <input type="file" name="attach-file" id="file-Image1" placeholder="Image1" >
                                 
                             </div>
                         </div>
-                        <label for="">Image2</label>
+                        <label for="file-Image2">Image2</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="Image2" placeholder="Image2">
+                                <input type="file" name="attach-file" id="file-Image2" placeholder="Image2">
                                 
                             </div>
                         </div>
-                        <label for="">Image3</label>
+                        <label for="file-Image2">Image3</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="Image3" placeholder="Image3">
+                                <input type="file" name="attach-file" id="file-Image3" placeholder="Image3">
                                 
                             </div>
                         </div>
-                        <label for="">Image4</label>
+                        <label for="file-Image4">Image4</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="Image4" placeholder="Image4">
+                                <input type="file" name="attach-file" id="file-Image4" placeholder="Image4">
                                 
                             </div>
                         </div>
-                        <label for="">Color</label>
+                        <label for="floatProductColor">Color</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="text" name="Color" placeholder="Color">
-                                
+                                <form:input  id="floatProductColor" path="color" placeholder="Color" />
+  
                             </div>
                         </div>
-                        <label for="">Price</label>
+                        <label for="floatProductPrice">Price</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="text" name="Price" placeholder="Price">
+                                <form:input  id="floatProductPrice" path="price" placeholder="Price" />
                                
                             </div>
                         </div>
-                        <label for="">Quantity</label>
+                        <label for="floatProductQuantity">Quantity</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="text" name="Quantity" placeholder="Quantity">
+                                <form:input id="floatProductQuantity" path="quantity" placeholder="Quantity" />
                                 
                             </div>
                         </div>
-                        <label for="">Manufactor</label>
+                        <label for="floatManufactor">Manufactor</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="text" name="Manufactor" placeholder="Manufactor">
+                                <form:input id="floatManufactor" path="manufactor"  placeholder="Manufactor" />
                                 
                             </div>
                         </div>
-                        <label for="">Discount</label>
+                        <label for="floatProductDiscount">Discount</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="text" name="Discount" placeholder="Discount">
+                                <form:input id="floatProductDiscount" path="discount"  placeholder="Discount" />
                                 
                             </div>
                         </div>
-                        <label for="">Available</label>
+                        
+                        <label for="floatProductCategory">Category Id</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="text" name="Available" placeholder="Available">
+                                <form:input id="floatProductCategory" path="category"  placeholder="Category Id" />
                                 
                             </div>
                         </div>
-                        <label for="">Category Id</label>
-                        <div class="dbl-field">
-                            <div class="field">
-                                <input type="text" name="CategoryId" placeholder="Category Id">
-                                
-                            </div>
-                        </div>
-                        <label for="">Description</label>
+                        <label for="floatProductDescription">Description</label>
                         <div class="message">
-                            <textarea placeholder="Description" name="Description"></textarea>
+                            <form:textarea placeholder="Description" path="Description"></form:textarea>
                         </div>
                         <div class="button-area">
-                            <button type="submit">Thêm</button>
+                            <button formaction="/home/admin/create">Thêm</button>
                         </div>
-                    </form>
+                    </form:form>
                 </div>
             </div>
 
-            <div class="dash-content" id="user">
 
+		<div class="dash-content" id="user">
+			<div class="activity">
+				<div class="title">
+					<i class='bx bx-user'></i> <span class="text">User</span>
+				</div>
 
-                <div class="activity">
-                    <div class="title">
-                        <i class='bx bx-user' ></i>
-                        <span class="text">User</span>
-                    </div>
-    
-                    <div class="activity-data">
-                        <div class="data names">
-                            <span class="data-title">Username</span>
-                            <span class="data-list">Duy An</span>
-                            <span class="data-list">Dat Van</span>
-                            <span class="data-list">Tien Thinh</span>
-                            <span class="data-list">Gia Khang</span>
-                            <span class="data-list">Thien An</span>
-                            <span class="data-list">Chi Pheo</span>
-                            <span class="data-list">Thi No</span>
-                            <span class="data-list">Lao Hat</span>
-                            <span class="data-list">Cau Vang</span>
-                            <span class="data-list">Naruto</span>
-                        </div>
-                        <div class="data email">
-                            <span class="data-title">Password</span>
-                            <span class="data-list">123</span>
-                            <span class="data-list">123</span>
-                            <span class="data-list">123</span>
-                            <span class="data-list">123</span>
-                            <span class="data-list">123</span>
-                            <span class="data-list">123</span>
-                            <span class="data-list">123</span>
-                            <span class="data-list">123</span>
-                            <span class="data-list">123</span>
-                            <span class="data-list">123</span>
-                        </div>
-                        <div class="data joined">
-                            <span class="data-title">Fullname</span>
-                            <span class="data-list">Nguyen Van A</span>
-                            <span class="data-list">Nguyen Van A</span>
-                            <span class="data-list">Nguyen Van A</span>
-                            <span class="data-list">Nguyen Van A</span>
-                            <span class="data-list">Nguyen Van A</span>
-                            <span class="data-list">Nguyen Van A</span>
-                            <span class="data-list">Nguyen Van A</span>
-                            <span class="data-list">Nguyen Van A</span>
-                            <span class="data-list">Nguyen Van A</span>
-                            <span class="data-list">Nguyen Van A</span>
-                        </div>
-                        <div class="data type">
-                            <span class="data-title">Phonenumber</span>
-                            <span class="data-list">0123456</span>
-                            <span class="data-list">0123456</span>
-                            <span class="data-list">0123456</span>
-                            <span class="data-list">0123456</span>
-                            <span class="data-list">0123456</span>
-                            <span class="data-list">0123456</span>
-                            <span class="data-list">0123456</span>
-                            <span class="data-list">0123456</span>
-                            <span class="data-list">0123456</span>
-                            <span class="data-list">0123456</span>
-                        </div>
-                        <div class="data status">
-                            <span class="data-title">Email</span>
-                            <span class="data-list">emai@gmail.com</span>
-                            <span class="data-list">emai@gmail.com</span>
-                            <span class="data-list">emai@gmail.com</span>
-                            <span class="data-list">emai@gmail.com</span>
-                            <span class="data-list">emai@gmail.com</span>
-                            <span class="data-list">emai@gmail.com</span>
-                            <span class="data-list">emai@gmail.com</span>
-                            <span class="data-list">emai@gmail.com</span>
-                            <span class="data-list">emai@gmail.com</span>
-                            <span class="data-list">emai@gmail.com</span>
-                        </div>
-                        <div class="data status">
-                            <span class="data-title">Photo</span>
-                            <span class="data-list">avatar.png</span>
-                            <span class="data-list">avatar.png</span>
-                            <span class="data-list">avatar.png</span>
-                            <span class="data-list">avatar.png</span>
-                            <span class="data-list">avatar.png</span>
-                            <span class="data-list">avatar.png</span>
-                            <span class="data-list">avatar.png</span>
-                            <span class="data-list">avatar.png</span>
-                            <span class="data-list">avatar.png</span>
-                            <span class="data-list">avatar.png</span>
-                        </div>
-                        <div class="data status">
-                            <span class="data-title">Admin</span>
-                            <span class="data-list">true</span>
-                            <span class="data-list">true</span>
-                            <span class="data-list">false</span>
-                            <span class="data-list">false</span>
-                            <span class="data-list">false</span>
-                            <span class="data-list">true</span>
-                            <span class="data-list">true</span>
-                            <span class="data-list">false</span>
-                            <span class="data-list">false</span>
-                            <span class="data-list">false</span>
-                        </div>
-                        
-                </div>
-    </section>
+				<div class="activity-data">
+					<div class="data names">
+						<span class="data-title">User</span>
+						<c:forEach var="item" items="${items}">
+							<span class="data-list">${item.username}</span>
+						</c:forEach>
+					</div>
+					<div class="data email">
+						<span class="data-title">Password</span>
+						<c:forEach var="item" items="${items}">
+							<span class="data-list">${item.password}</span>
+						</c:forEach>
+					</div>
+					<div class="data joined">
+						<span class="data-title">Fullname</span>
+						<c:forEach var="item" items="${items}">
+							<span class="data-list">${item.fullname}</span>
+						</c:forEach>
+					</div>
+					<div class="data type">
+						<span class="data-title">Phonenumber</span>
+						<c:forEach var="item" items="${items}">
+							<span class="data-list">${item.phonenumber}</span>
+						</c:forEach>
+					</div>
+					<div class="data status">
+						<span class="data-title">Email</span>
+						<c:forEach var="item" items="${items}">
+							<span class="data-list">${item.email}</span>
+						</c:forEach>
+					</div>
+					<div class="data status">
+						<span class="data-title">Photo</span>
+						<c:forEach var="item" items="${items}">
+							<span class="data-list">${item.photo}</span>
+						</c:forEach>
+					</div>
+					<div class="data status">
+						<span class="data-title">Admin</span>
+						<c:forEach var="item" items="${items}">
+							<span class="data-list">${item.admin}</span>
+						</c:forEach>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </body>
 <script type="text/javascript">
 const body = document.querySelector("body"),
