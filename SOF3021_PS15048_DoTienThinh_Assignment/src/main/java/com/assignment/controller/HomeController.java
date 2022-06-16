@@ -110,7 +110,7 @@ public class HomeController {
 //			System.out.println(multipartFile.getOriginalFilename());
 		}
 		productRepository.save(product);
-		return "home/admin";
+		return "redirect:/home/admin";
 	}
 
 	@RequestMapping("/home/admin/edit/{id}")
@@ -119,7 +119,7 @@ public class HomeController {
 		model.addAttribute("product", product);
 		List<Product> products = productRepository.findAll();
 		model.addAttribute("products", products);
-		return "/home/admin";
+		return "home/admin";
 	}
 
 	@RequestMapping("/home/admin/update")

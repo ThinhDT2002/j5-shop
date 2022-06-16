@@ -770,27 +770,27 @@ button:hover {
                     	<div class="data joined">
                         <span class="data-title">Image1</span>
                         <c:forEach var="product" items="${products}">
-                        <img src="../images/product/${product.image1}"/>
+                        <img src="../../../images/product/${product.image1}"/>
                         </c:forEach>
                     </div>
                     
                     <div class="data type">
                         <span class="data-title">Image2</span>
                         <c:forEach var="product" items="${products}">
-                        	<img src="../images/product/${product.image2}"/>
+                        	<img src="../../../images/product/${product.image2}"/>
                         </c:forEach>
                     </div>
                     <div class="data status">
                     	<span class="data-title">Image3</span>
                         <c:forEach var="product" items="${products}">
-                        	<img src="../images/product/${product.image3}"/>
+                        	<img src="../../../images/product/${product.image3}"/>
                         </c:forEach>
                         
                     </div>
                     <div class="data status">
                         <span class="data-title">Image4</span>
                         <c:forEach var="product" items="${products}">
-                        	<img src="../images/product/${product.image4}"/>
+                        	<img src="../../../images/product/${product.image4}"/>
                         </c:forEach>
                     </div>
                     <div class="data status">
