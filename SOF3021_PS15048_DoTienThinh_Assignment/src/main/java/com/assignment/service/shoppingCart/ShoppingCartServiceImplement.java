@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.assignment.model.Orders;
+import com.assignment.model.OrdersDetail;
 import com.assignment.model.Product;
+import com.assignment.service.database.OrdersDetailRepository;
 import com.assignment.service.database.ProductRepository;
 
 @Service
@@ -18,6 +21,8 @@ import com.assignment.service.database.ProductRepository;
 public class ShoppingCartServiceImplement implements ShoppingCartService {
 	@Autowired
 	ProductRepository productRepository;
+	@Autowired
+	OrdersDetailRepository ordersDetailRepository;
 	Map<Integer, Product> shoppingCart = new HashMap<>();
 
 	@Override
@@ -96,5 +101,23 @@ public class ShoppingCartServiceImplement implements ShoppingCartService {
 			collection.add(product);
 		}
 		return collection;
+	}
+	
+	public void getProductsInShoppingCartInsertIntoOrderDetail(Orders orders) {
+		Iterator<Map.Entry<Integer, Product>> iterator = shoppingCart.entrySet().iterator();
+		while(iterator.hasNext()) {
+			Map.Entry<Integer, Product> entry = iterator.next();
+			Product product = entry.getValue();
+			Product productInStock = productRepository.findProductById(product.getId());
+			int productRemain = productInStock.getQuantity() - product.getQuantity();
+			productInStock.setQuantity(productRemain);
+			OrdersDetail ordersDetail = new OrdersDetail();
+			ordersDetail.setOrders(orders);
+			ordersDetail.setQuantity(product.getQuantity());
+			ordersDetail.setProduct(product);
+			ordersDetailRepository.save(ordersDetail);
+			productRepository.save(productInStock);
+		}
+		shoppingCart.clear();
 	}
 }

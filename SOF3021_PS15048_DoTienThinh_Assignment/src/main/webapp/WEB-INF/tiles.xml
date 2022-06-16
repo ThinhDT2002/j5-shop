@@ -19,4 +19,7 @@
 	<definition name="account/profilecard" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/account/profilecard.jsp"></put-attribute>
 	</definition>
+	<definition name="home/order/detail" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/orderDetail.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

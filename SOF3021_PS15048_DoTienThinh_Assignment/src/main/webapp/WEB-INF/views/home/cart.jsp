@@ -186,6 +186,7 @@ body {
 <body>
 	<div class="wrapper">
 		<h1 class="text3d">Shopping Cart</h1>
+		<h3>${buyMessage}</h3>
 		<div class="project">
 			<div class="shop">
 				<c:forEach var="product" items="${shoppingCart.products}">
@@ -195,9 +196,13 @@ body {
 							<div class="content">
 								<h3>${product.name}</h3>
 								<h4>
-									<fmt:formatNumber value="${newPrice}" type="currency" currencySymbol="VND"></fmt:formatNumber>/1
+									<fmt:formatNumber value="${newPrice}" type="currency" currencySymbol="VND"></fmt:formatNumber> * 1 
+									= <fmt:formatNumber value="${newPrice * product.quantity}" type="currency" currencySymbol="VND"></fmt:formatNumber>
 								</h4>
-								<p class="unit">Quantity: <input name="quantity" type="number" onchange="this.form.submit()" value="${product.quantity}"/></p>
+								<p class="unit">Quantity: <input name="quantity" type="number" min="1" onchange="this.form.submit()" value="${product.quantity}"/>
+									<span>${errorQuantityMessage}</span>
+								</p>
+								
 								<p class="btn-area"><i aria-hidden="true" class="fa fa-trash"></i> <span class="btn2">
 									<a href="/home/cart/remove/${product.id}">Remove</a>
 								</span></p>
@@ -221,19 +226,22 @@ body {
 				<hr>
 				<p><span>Total    </span> <span>
 					<fmt:formatNumber value="${shoppingCart.amount + shoppingCart.tax + shoppingCart.shipping}" type="currency" currencySymbol="VND"></fmt:formatNumber>
-				</span></p><a href="#"><i class="fa fa-shopping-cart"></i>Checkout</a>
+				</span></p><a href=""><i class="fa fa-shopping-cart"></i>Checkout</a>
 			</div>
 		</div>
-		<div class="right-bar" style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 60px">
-			<p><span>Delivery address</span></p>
-			<input type="text" name="" id="" class="address__input">
-			<hr>
-			<p><span>Pick-up phone number</span></p>
-			<input type="text" name="" id="" class="address__input">
-			<hr>
-			<p><span>replacement recipient's name (if any)</span></p>
-			<input type="text" name="" id="" class="address__input">
-		</div>
+		<form action="/home/cart/checkout" method="post">
+			<div class="right-bar" style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 60px">
+				<p><span>Delivery address</span></p>
+				<input type="text" name="address" id="" class="address__input">
+				<hr>
+				<p><span>Pick-up phone number</span></p>
+				<input type="text" name="phonenumber" id="" class="address__input">
+				<hr>
+				<p><span>replacement recipient's name (if any)</span></p>
+				<input type="text" name="orderNote" id="" class="address__input">
+			</div>
+			<button type="submit"><i class="fa fa-shopping-cart"></i>Checkout</button>
+		</form>
 	</div>
 </body>
 </html>

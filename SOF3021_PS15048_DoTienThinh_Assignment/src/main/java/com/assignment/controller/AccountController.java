@@ -53,6 +53,10 @@ public class AccountController {
 	
 	@RequestMapping("/account/login")
 	public String getLogin() {
+		Account account = sessionService.getAttribute("user");
+		if(account != null) {
+			return "redirect:/home/index";
+		}
 		return "account/login";
 	}
 	

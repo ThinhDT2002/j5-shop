@@ -178,12 +178,22 @@
                 
             </section>
             <div class="btn-changepage">
-            <a class="btn btn-primary offset-3" href="/home/index?p=0&category=${category}">First</a>
-					<a class="btn btn-primary" href="/home/index?p=${products.number-1}&category=${category}">Previous</a>
-					<a class="btn btn-primary" href="/home/index?p=${products.number+1}&category=${category}">Next</a>
-					<a class="btn btn-primary" href="/home/index?p=${products.totalPages-1}&category=${category}">Last</a>
+            <a class="btn btn-primary offset-3" href="/home/index?p=0&category=${category}#featured">First</a>
+            		<c:if test="${products.number == 0 }">
+            			<a class="btn btn-primary" href="#">Previous</a>
+            		</c:if>
+            		<c:if test="${products.number != 0 }">
+            			<a class="btn btn-primary" href="/home/index?p=${products.number-1}&category=${category}#featured">Previous</a>
+            		</c:if>
+            		<c:if test="${products.number >= (products.totalPages - 1)}">
+            			<a class="btn btn-primary" href="#">Next</a>
+            		</c:if>
+            		<c:if test="${products.number < (products.totalPages - 1)}">
+						<a class="btn btn-primary" href="/home/index?p=${products.number+1}&category=${category}#featured">Next</a>         		
+            		</c:if>
+					<a class="btn btn-primary" href="/home/index?p=${products.totalPages-1}&category=${category}#featured">Last</a>
             </div>
-					
+					<h5 align="center">${products.number+1}/${products.totalPages}</h5>
             <!--===== OFFER =====-->
             <section class="offer section">
                 <div class="offer__bg">

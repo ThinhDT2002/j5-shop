@@ -31,7 +31,7 @@ create table Accounts(
 	Username varchar(30) not null,
 	Password varchar(30) not null,
 	Fullname nvarchar(40),
-	Phonenumber char(10),
+	Phonenumber varchar(10),
 	Email varchar(30) not null,
 	Photo varchar(30),
 	Admin bit,
@@ -44,7 +44,10 @@ create table Orders(
 	Username varchar(30) not null,
 	Create_Date date not null,
 	Address nvarchar(200) not null,
+	Phonenumber varchar(10),
 	Order_Note nvarchar(100),
+	Order_Status int,
+	Price decimal(12,2),
 	primary key (Order_Id),
 	constraint fk_orders_username
 	foreign key (Username) references Accounts(Username)
@@ -151,3 +154,28 @@ values('Acer Aspire 7 A715 42G R4XX','Acer-Aspire-7-A715-42G-R4XX.png','Acer-Asp
 	  ('HyperX Cloud Virtual 7.1 Surround','CloudII-controller-compressed.jpg','CloudII-controller-compressed.jpg','CloudII-controller-compressed.jpg','CloudII-controller-compressed.jpg',N'Đen',1050000,8,N'NSX X',N'Card âm thanh HyberX',8,'OTHER'),
 	  ('HyperX Pudding PBT Doubleshot','Pudding-keycap-1.jpg','Pudding-keycap-1.jpg','Pudding-keycap-1.jpg','Pudding-keycap-1.jpg',N'Đen',650000,41,N'NSX X',N'Bộ keycap HyperX Pudding PBT Doubleshot',12,'OTHER')
 
+
+go
+create procedure CreateOrder(
+@Username varchar(30),
+@Create_Date date, 
+@Address nvarchar(200),
+@Phonenumber varchar(10), 
+@Order_Note nvarchar(100), 
+@Order_Status int, 
+@Price decimal(12,2),
+@Output int output)
+as
+begin
+declare @OutputOrderId Table(id int)
+insert into Orders(Username,Create_Date,Address, Phonenumber, Order_Note, Order_Status,Price)
+output inserted.Order_Id into @OutputOrderId(id)
+values(@Username,@Create_Date,@Address,@Phonenumber,@Order_Note,@Order_Status,@Price)
+set @Output = (select id from @OutputOrderId)
+return @Output
+end
+
+
+declare @o int
+exec @o= CreateOrder'thinhdt15048','06-16-2022',N'TPHCM','0123456789','None',1,1000000,null
+select @o

@@ -297,10 +297,17 @@ img{
 
                 <div class="purchase-info">
                 	<form action="/home/cart/add/${product.id}" method="post">
-                		<input type="number" min="1" name="quantity" value="1">
-                		<button class="btn">
-                        	Add to Cart <i class="fas fa-shopping-cart"></i>
-                    	</button>
+                		<input type="number" min="1" max="${product.quantity}" name="quantity" value="1">
+                		<c:if test="${product.quantity > 0}">
+                			<button class="btn">
+                        		Add to Cart <i class="fas fa-shopping-cart"></i>
+                    		</button>
+                		</c:if>
+                		<c:if test="${product.quantity <= 0}">
+                			<button class="btn" disabled="disabled">
+                        		Add to Cart <i class="fas fa-shopping-cart"></i>
+                    		</button>
+                		</c:if>
                     	<button type="button" class="btn">Compare</button>
                 	</form>                                                          
                 </div>
