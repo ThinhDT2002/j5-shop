@@ -269,7 +269,11 @@ public class AccountController {
 			account.setFullname(account.getFullname());
 			account.setPhonenumber(account.getPhonenumber());
 			account.setActivated(curUser.getActivated());
-			account.setAdmin(false);
+			if(curUser.getAdmin() == false || curUser.getAdmin() == null) {
+				account.setAdmin(false);
+			} else {
+				account.setAdmin(true);
+			}
 			if(!multipartFile.isEmpty()) {
 				String filename = multipartFile.getOriginalFilename();
 				File file = new File(URL_PHOTO + filename);
