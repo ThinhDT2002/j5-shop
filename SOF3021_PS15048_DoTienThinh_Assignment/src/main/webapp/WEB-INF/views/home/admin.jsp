@@ -678,22 +678,28 @@ button:hover {
                     <div class="box box1">
                         <i class='bx bx-money' ></i>
                         <span class="text">Turnover</span>
-                        <span class="number">10,000,000</span>
+                        <span class="number">
+                        	<fmt:formatNumber value="${turnover}" type="currency" currencySymbol="VND" />
+                        </span>
                     </div>
                     <div class="box box2">
                         <i class='bx bx-home-smile' ></i>
                         <span class="text">Depot</span>
-                        <span class="number">500</span>
+                        <span class="number">
+							${depot}
+						</span>
                     </div>
                     <div class="box box3">
                         <i class='bx bx-cart-download' ></i>
                         <span class="text">Sold</span>
-                        <span class="number">200</span>
+                        <span class="number">
+                        	${sold}    
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <div class="activity">
+            <div class="activity" id="order">
                 <div class="title">
                     <i class='bx bx-receipt'></i>
                     <span class="text">Bill</span>
@@ -701,45 +707,68 @@ button:hover {
                 <div class="activity-data">
                     <div class="data names">
                         <span class="data-title">OrderID</span>
-                        <span class="data-list">${userr.id}</span>
-                        <span class="data-list">2</span>
-                        <span class="data-list">3</span>
-                        <span class="data-list">4</span>
-                        <span class="data-list">5</span>
+					<c:forEach var="order" items="${adminOrders.content}">
+						<span class="data-list">${order.id}</span>
+					</c:forEach>
                     </div>
                     <div class="data email">
-                        <span class="data-title">User Name</span>
-                        <span class="data-list">Duy An</span>
-                        <span class="data-list">Tien Thinh</span>
-                        <span class="data-list">Dat Van</span>
-                        <span class="data-list">Thien An</span>
-                        <span class="data-list">Gia Khang</span>
+                        <span class="data-title">User</span>
+					<c:forEach var="order" items="${adminOrders.content}">
+						<span class="data-list">${order.account.fullname}</span>
+					</c:forEach>
                     </div>
                     <div class="data joined">
                         <span class="data-title">Date</span>
-                        <span class="data-list">2022-06-14</span>
-                        <span class="data-list">2022-06-14</span>
-                        <span class="data-list">2022-06-14</span>
-                        <span class="data-list">2022-06-14</span>
-                        <span class="data-list">2022-06-14</span>
+					<c:forEach var="order" items="${adminOrders.content}">
+						<span class="data-list">${order.createDate}</span>
+					</c:forEach>
                     </div>
                     <div class="data type">
                         <span class="data-title">Address</span>
-                        <span class="data-list">Quan 12</span>
-                        <span class="data-list">Quan 12</span>
-                        <span class="data-list">Quan 12</span>
-                        <span class="data-list">Quan 12</span>
-                        <span class="data-list">Quan 12</span>
+					<c:forEach var="order" items="${adminOrders.content}">
+						<span class="data-list">${order.createDate}</span>
+					</c:forEach>
+                    </div>
+                   	<div class="data status">
+                        <span class="data-title">Status</span>
+					<c:forEach var="order" items="${adminOrders.content}">
+						<c:if test="${order.status == 1 }">
+							<span class="data-list">Chờ xác nhận</span>
+						</c:if>
+						<c:if test="${order.status == 2 }">
+							<span class="data-list">Đang giao hàng</span>
+						</c:if>
+						<c:if test="${order.status == 3 }">
+							<span class="data-list">Đã giao hàng</span>
+						</c:if>
+					</c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Note</span>
-                        <span class="data-list">khong biet ghi gi het</span>
-                        <span class="data-list">khong biet ghi gi het</span>
-                        <span class="data-list">khong biet ghi gi het</span>
-                        <span class="data-list">khong biet ghi gi het</span>
-                        <span class="data-list">khong biet ghi gi het</span>
+					<c:forEach var="order" items="${adminOrders.content}">
+						<span class="data-list">${order.note}</span>
+					</c:forEach>
                     </div>
                 </div>
+                
+                            <div class="btn-changepage">
+            <a class="btn btn-primary offset-3" href="/home/admin?p=0#order">First</a>
+            		<c:if test="${adminOrders.number == 0 }">
+            			<a class="btn btn-primary" href="#order">Previous</a>
+            		</c:if>
+            		<c:if test="${adminOrders.number != 0 }">
+            			<a class="btn btn-primary" href="/home/admin?p=${adminOrders.number-1}#order">Previous</a>
+            		</c:if>
+            		<c:if test="${adminOrders.number >= (adminOrders.totalPages - 1)}">
+            			<a class="btn btn-primary" href="#order">Next</a>
+            		</c:if>
+            		<c:if test="${adminOrders.number < (adminOrders.totalPages - 1)}">
+						<a class="btn btn-primary" href="/home/admin?p=${adminOrders.number+1}#order">Next</a>         		
+            		</c:if>
+					<a class="btn btn-primary" href="/home/admin?p=${adminOrders.totalPages-1}#order">Last</a>
+            </div>
+					<h5 align="center">${adminOrders.number+1}/${adminOrders.totalPages}</h5>
+                
             </div>
         </div>
 
@@ -769,43 +798,27 @@ button:hover {
                     
                     	<div class="data joined">
                         <span class="data-title">Image1</span>
-<<<<<<< HEAD
                         <c:forEach var="product" items="${adminProducts.content}">
-=======
-                        <c:forEach var="product" items="${products}">
->>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
                         <img src="../../../images/product/${product.image1}"/>
                         </c:forEach>
                     </div>
                     
                     <div class="data type">
                         <span class="data-title">Image2</span>
-<<<<<<< HEAD
                         <c:forEach var="product" items="${adminProducts.content}">
-=======
-                        <c:forEach var="product" items="${products}">
->>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
                         	<img src="../../../images/product/${product.image2}"/>
                         </c:forEach>
                     </div>
                     <div class="data status">
                     	<span class="data-title">Image3</span>
-<<<<<<< HEAD
                         <c:forEach var="product" items="${adminProducts.content}">
-=======
-                        <c:forEach var="product" items="${products}">
->>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
                         	<img src="../../../images/product/${product.image3}"/>
                         </c:forEach>
                         
                     </div>
                     <div class="data status">
                         <span class="data-title">Image4</span>
-<<<<<<< HEAD
                         <c:forEach var="product" items="${adminProducts.content}">
-=======
-                        <c:forEach var="product" items="${products}">
->>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
                         	<img src="../../../images/product/${product.image4}"/>
                         </c:forEach>
                     </div>
@@ -885,6 +898,7 @@ button:hover {
 					<a class="btn btn-primary" href="/home/admin?p=${adminProducts.totalPages-1}#product">Last</a>
             </div>
 					<h5 align="center">${adminProducts.number+1}/${adminProducts.totalPages}</h5>
+            </div>
             </div>
             <div class="activity">
                 <div class="title">

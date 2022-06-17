@@ -97,6 +97,43 @@ public class HomeController {
 		return accounts;
 	}
 	
+	@ModelAttribute("adminOrders")
+	public Page<Orders> getAdminOrdersView(@RequestParam("pOrder") Optional<Integer> p) {
+		Pageable pageable = PageRequest.of(p.orElse(0), 10);
+		Page<Orders> orders = ordersRepository.findAll(pageable);
+		return orders;
+	}
+	
+	@ModelAttribute("turnover")
+	public double getTurnOver() {
+		double turnover = 0;
+		List<Orders> orders = ordersRepository.findAll();
+		for(Orders order : orders) {
+			turnover += order.getPrice();
+		}
+		return turnover;
+	}
+	
+	@ModelAttribute("depot")
+	public int getDepot() {
+		int depot = 0;
+		List<Product> products = productRepository.findAll();
+		for(Product product : products) {
+			depot += product.getQuantity();
+		}
+		return depot;
+	}
+	
+	@ModelAttribute("sold")
+	public int getSold() {
+		int sold = 0;
+		List<OrdersDetail> ordersDetails = ordersDetailRepository.findAll();
+		for(OrdersDetail ordersDetail : ordersDetails) {
+			sold += ordersDetail.getQuantity();
+		}
+		return sold;
+	}
+	
 	@RequestMapping("/home/admin/create")
 	public String createProduct(Product product, 
 			@RequestParam("attach-file1") MultipartFile multipartFile1,
@@ -163,14 +200,9 @@ public class HomeController {
 			@RequestParam("p") Optional<Integer> p) {
 		Product product = productRepository.findById(id).get();
 		model.addAttribute("product", product);
-<<<<<<< HEAD
 //		Pageable pageable = PageRequest.of(p.orElse(0), 10);
 //		Page<Product> products = productRepository.findAll(pageable);
 //		model.addAttribute("products", products);
-=======
-		List<Product> products = productRepository.findAll();
-		model.addAttribute("products", products);
->>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
 		return "home/admin";
 	}
 
