@@ -72,54 +72,101 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/home/admin")
-	public String getAccount(Model model) {
+	public String getAccount(Model model, @RequestParam("p") Optional<Integer> p) {
 		Product product = new Product();
 		model.addAttribute("product", product);
-		List<Product> products = productRepository.findAll();
-		model.addAttribute("products", products);
-		List<Account> items = accountRepository.findAll();
-		model.addAttribute("items", items);
+//		Pageable pageable = PageRequest.of(p.orElse(0), 10);
+//		Page<Product> products = productRepository.findAll(pageable);
+//		model.addAttribute("products", products);
+//		List<Account> items = accountRepository.findAll();
+//		model.addAttribute("items", items);
 		return "home/admin";
 	}
 	
+	@ModelAttribute("adminProducts")
+	public Page<Product> getAdminProductView(@RequestParam("p") Optional<Integer> p) {
+		Pageable pageable = PageRequest.of(p.orElse(0), 10);
+		Page<Product> products = productRepository.findAll(pageable);
+		return products;
+	}
+	
+	@ModelAttribute("adminUsers")
+	public Page<Account> getAdminUsersView(@RequestParam("pUser") Optional<Integer> p) {
+		Pageable pageable = PageRequest.of(p.orElse(0), 10);
+		Page<Account> accounts = accountRepository.findAll(pageable);
+		return accounts;
+	}
+	
 	@RequestMapping("/home/admin/create")
-	public String createProduct(Product product, @RequestParam("attach-file")
-			MultipartFile multipartFile) throws IllegalStateException, IOException{
-		if(!multipartFile.isEmpty()) {
-			String path = app.getRealPath("/"); // nó lấy đường dẫn webapp
-			
-			System.out.println("path : " + path);
-			
-			
-			
-			String fileName = multipartFile.getOriginalFilename();
+	public String createProduct(Product product, 
+			@RequestParam("attach-file1") MultipartFile multipartFile1,
+			@RequestParam("attach-file2") MultipartFile multipartFile2,
+			@RequestParam("attach-file3") MultipartFile multipartFile3,
+			@RequestParam("attach-file4") MultipartFile multipartFile4) throws IllegalStateException, IOException{
+		if(product.getId() != null) {
+			product = productRepository.findProductById(product.getId());
+		}
+		if(!multipartFile1.isEmpty()) {
+			String path = app.getRealPath("/"); // nó lấy đường dẫn webapp		
+			System.out.println("path : " + path);	
+			String fileName = multipartFile1.getOriginalFilename();
 			File file = new File(path + "/images/product/" + fileName);
 			
 			if(!file.exists()) {
 				file.mkdirs();
 			}
-			
-			product.setImage1(fileName);
-			product.setImage2(fileName);
-			product.setImage3(fileName);
-			product.setImage4(fileName);
-			
-			multipartFile.transferTo(file);
+			product.setImage1(fileName);	
+			multipartFile1.transferTo(file);
 //			System.out.println(file);
 //			System.out.println(file.getAbsolutePath());
 //			System.out.println(multipartFile.getOriginalFilename());
 		}
+		if(!multipartFile2.isEmpty()) {
+			String path = app.getRealPath("/"); // nó lấy đường dẫn webapp
+			System.out.println("path : " + path);
+			String fileName = multipartFile2.getOriginalFilename();
+			File file = new File(path + "/images/product/" + fileName);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			product.setImage2(fileName);
+			multipartFile2.transferTo(file);
+		}
+		if(!multipartFile3.isEmpty()) {
+			String path = app.getRealPath("/"); // nó lấy đường dẫn webapp
+			System.out.println("path : " + path);
+			String fileName = multipartFile3.getOriginalFilename();
+			File file = new File(path + "/images/product/" + fileName);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			product.setImage3(fileName);
+			multipartFile3.transferTo(file);
+		}
+		if(!multipartFile4.isEmpty()) {
+			String path = app.getRealPath("/"); // nó lấy đường dẫn webapp
+			System.out.println("path : " + path);
+			String fileName = multipartFile4.getOriginalFilename();
+			File file = new File(path + "/images/product/" + fileName);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			product.setImage4(fileName);
+			multipartFile4.transferTo(file);
+		}
 		productRepository.save(product);
-		return "home/admin";
+		return "redirect:/home/admin";
 	}
 
 	@RequestMapping("/home/admin/edit/{id}")
-	public String editProduct(Model model, @PathVariable("id") Integer id) {
+	public String editProduct(Model model, @PathVariable("id") Integer id,
+			@RequestParam("p") Optional<Integer> p) {
 		Product product = productRepository.findById(id).get();
 		model.addAttribute("product", product);
-		List<Product> products = productRepository.findAll();
-		model.addAttribute("products", products);
-		return "/home/admin";
+//		Pageable pageable = PageRequest.of(p.orElse(0), 10);
+//		Page<Product> products = productRepository.findAll(pageable);
+//		model.addAttribute("products", products);
+		return "home/admin";
 	}
 
 	@RequestMapping("/home/admin/update")

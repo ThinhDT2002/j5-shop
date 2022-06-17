@@ -755,104 +755,120 @@ button:hover {
 					<div class="data names">
 					
                     <span class="data-title" style="width: 120px;" >Product ID</span>
-                    <c:forEach var="product" items="${products}">
+                    <c:forEach var="product" items="${adminProducts.content}">
                         <span class="data-list">${product.id}</span>
                         </c:forEach>
                     </div>             
                     
                     <div class="data email">
                         <span class="data-title">Name</span>
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${adminProducts.content}">
                         <span class="data-list">${product.name}</span>
                         </c:forEach>
                     </div>
                     
                     	<div class="data joined">
                         <span class="data-title">Image1</span>
-                        <c:forEach var="product" items="${products}">
-                        <img src="../images/product/${product.image1}"/>
+                        <c:forEach var="product" items="${adminProducts.content}">
+                        <img src="../../../images/product/${product.image1}"/>
                         </c:forEach>
                     </div>
                     
                     <div class="data type">
                         <span class="data-title">Image2</span>
-                        <c:forEach var="product" items="${products}">
-                        	<img src="../images/product/${product.image2}"/>
+                        <c:forEach var="product" items="${adminProducts.content}">
+                        	<img src="../../../images/product/${product.image2}"/>
                         </c:forEach>
                     </div>
                     <div class="data status">
                     	<span class="data-title">Image3</span>
-                        <c:forEach var="product" items="${products}">
-                        	<img src="../images/product/${product.image3}"/>
+                        <c:forEach var="product" items="${adminProducts.content}">
+                        	<img src="../../../images/product/${product.image3}"/>
                         </c:forEach>
                         
                     </div>
                     <div class="data status">
                         <span class="data-title">Image4</span>
-                        <c:forEach var="product" items="${products}">
-                        	<img src="../images/product/${product.image4}"/>
+                        <c:forEach var="product" items="${adminProducts.content}">
+                        	<img src="../../../images/product/${product.image4}"/>
                         </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Color</span>
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${adminProducts.content}">
                         	<span class="data-list">${product.color}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Price</span>
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${adminProducts.content}">
                         	<span class="data-list">${product.price}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Quantity</span>
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${adminProducts.content}">
                         	<span class="data-list">${product.quantity}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Manufactor</span>
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${adminProducts.content}">
                         	<span class="data-list">${product.manufactor}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Description</span>
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${adminProducts.content}">
                         	<span class="data-list">${product.description}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
                         <span class="data-title">Discount</span>
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${adminProducts.content}">
                         	<span class="data-list">${product.discount}</span>
                         </c:forEach>
                     </div>
                     
                     <div class="data status">
                         <span class="data-title">Category_Id</span>
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${adminProducts.content}">
                         	<span class="data-list">${product.category.id}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
-                        <span class="data-title">Edit</span>
-                        <c:forEach var="product" items="${products}">
+                        <span class="data-title">Chỉnh sửa</span>
+                        <c:forEach var="product" items="${adminProducts.content}">
                         <span class="data-title"><a href="/home/admin/edit/${product.id}">Edit</a></span>                        	
                         </c:forEach>                                                         
                     </div>
                     <div class="data status">
-                        <span class="data-title">Delete</span>
-                        <c:forEach var="product" items="${products}">
+                        <span class="data-title">Xoá</span>
+                        <c:forEach var="product" items="${adminProducts.content}">
                         <form:form action="/home/admin" modelAttribute="product" enctype="multipart/form-data">
                         	<span class="data-list"><a href="/home/admin/delete/${product.id}">Delete</a></span>
-                        	</form:form>
+                        </form:form>
                         </c:forEach>
                     </div>
                     
                 </div>
-                
+            <div class="btn-changepage">
+            <a class="btn btn-primary offset-3" href="/home/admin?p=0#product">First</a>
+            		<c:if test="${adminProducts.number == 0 }">
+            			<a class="btn btn-primary" href="#product">Previous</a>
+            		</c:if>
+            		<c:if test="${adminProducts.number != 0 }">
+            			<a class="btn btn-primary" href="/home/admin?p=${adminProducts.number-1}#product">Previous</a>
+            		</c:if>
+            		<c:if test="${adminProducts.number >= (adminProducts.totalPages - 1)}">
+            			<a class="btn btn-primary" href="#product">Next</a>
+            		</c:if>
+            		<c:if test="${adminProducts.number < (adminProducts.totalPages - 1)}">
+						<a class="btn btn-primary" href="/home/admin?p=${adminProducts.number+1}#product">Next</a>         		
+            		</c:if>
+					<a class="btn btn-primary" href="/home/admin?p=${adminProducts.totalPages-1}#product">Last</a>
+            </div>
+					<h5 align="center">${adminProducts.number+1}/${adminProducts.totalPages}</h5>
             </div>
             <div class="activity">
                 <div class="title">
@@ -878,28 +894,28 @@ button:hover {
                         <label for="file-Image1">Image1</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="attach-file" id="file-Image1" placeholder="Image1" >
+                                <input type="file" name="attach-file1" id="file-Image1" placeholder="Image1" >
                                 
                             </div>
                         </div>
                         <label for="file-Image2">Image2</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="attach-file" id="file-Image2" placeholder="Image2">
+                                <input type="file" name="attach-file2" id="file-Image2" placeholder="Image2">
                                 
                             </div>
                         </div>
                         <label for="file-Image2">Image3</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="attach-file" id="file-Image3" placeholder="Image3">
+                                <input type="file" name="attach-file3" id="file-Image3" placeholder="Image3">
                                 
                             </div>
                         </div>
                         <label for="file-Image4">Image4</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="attach-file" id="file-Image4" placeholder="Image4">
+                                <input type="file" name="attach-file4" id="file-Image4" placeholder="Image4">
                                 
                             </div>
                         </div>
@@ -967,47 +983,65 @@ button:hover {
 				<div class="activity-data">
 					<div class="data names">
 						<span class="data-title">User</span>
-						<c:forEach var="item" items="${items}">
+						<c:forEach var="item" items="${adminUsers.content}">
 							<span class="data-list">${item.username}</span>
 						</c:forEach>
 					</div>
 					<div class="data email">
 						<span class="data-title">Password</span>
-						<c:forEach var="item" items="${items}">
+						<c:forEach var="item" items="${adminUsers.content}">
 							<span class="data-list">${item.password}</span>
 						</c:forEach>
 					</div>
 					<div class="data joined">
 						<span class="data-title">Fullname</span>
-						<c:forEach var="item" items="${items}">
+						<c:forEach var="item" items="${adminUsers.content}">
 							<span class="data-list">${item.fullname}</span>
 						</c:forEach>
 					</div>
 					<div class="data type">
 						<span class="data-title">Phonenumber</span>
-						<c:forEach var="item" items="${items}">
+						<c:forEach var="item" items="${adminUsers.content}">
 							<span class="data-list">${item.phonenumber}</span>
 						</c:forEach>
 					</div>
 					<div class="data status">
 						<span class="data-title">Email</span>
-						<c:forEach var="item" items="${items}">
+						<c:forEach var="item" items="${adminUsers.content}">
 							<span class="data-list">${item.email}</span>
 						</c:forEach>
 					</div>
 					<div class="data status">
 						<span class="data-title">Photo</span>
-						<c:forEach var="item" items="${items}">
+						<c:forEach var="item" items="${adminUsers.content}">
 							<span class="data-list">${item.photo}</span>
 						</c:forEach>
 					</div>
 					<div class="data status">
 						<span class="data-title">Admin</span>
-						<c:forEach var="item" items="${items}">
+						<c:forEach var="item" items="${adminUsers.content}">
 							<span class="data-list">${item.admin}</span>
 						</c:forEach>
 					</div>
 				</div>
+				<div class="btn-changepage">
+            <a class="btn btn-primary offset-3" href="/home/admin?pUser=0#user">First</a>
+            		<c:if test="${adminUsers.number == 0 }">
+            			<a class="btn btn-primary" href="#user">Previous</a>
+            		</c:if>
+            		<c:if test="${adminUsers.number != 0 }">
+            			<a class="btn btn-primary" href="/home/admin?pUser=${adminUsers.number-1}#user">Previous</a>
+            		</c:if>
+            		<c:if test="${adminUsers.number >= (adminUsers.totalPages - 1)}">
+            			<a class="btn btn-primary" href="#user">Next</a>
+            		</c:if>
+            		<c:if test="${adminUsers.number < (adminUsers.totalPages - 1)}">
+						<a class="btn btn-primary" href="/home/admin?pUser=${adminUsers.number+1}#user">Next</a>         		
+            		</c:if>
+					<a class="btn btn-primary" href="/home/admin?pUser=${adminUsers.totalPages-1}#user">Last</a>
+            </div>
+					<h5 align="center">${adminUsers.number+1}/${adminUsers.totalPages}</h5>
+            
 			</div>
 		</div>
 	</section>
