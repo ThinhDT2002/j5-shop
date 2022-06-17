@@ -163,9 +163,14 @@ public class HomeController {
 			@RequestParam("p") Optional<Integer> p) {
 		Product product = productRepository.findById(id).get();
 		model.addAttribute("product", product);
+<<<<<<< HEAD
 //		Pageable pageable = PageRequest.of(p.orElse(0), 10);
 //		Page<Product> products = productRepository.findAll(pageable);
 //		model.addAttribute("products", products);
+=======
+		List<Product> products = productRepository.findAll();
+		model.addAttribute("products", products);
+>>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
 		return "home/admin";
 	}
 

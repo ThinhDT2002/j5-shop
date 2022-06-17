@@ -769,27 +769,43 @@ button:hover {
                     
                     	<div class="data joined">
                         <span class="data-title">Image1</span>
+<<<<<<< HEAD
                         <c:forEach var="product" items="${adminProducts.content}">
+=======
+                        <c:forEach var="product" items="${products}">
+>>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
                         <img src="../../../images/product/${product.image1}"/>
                         </c:forEach>
                     </div>
                     
                     <div class="data type">
                         <span class="data-title">Image2</span>
+<<<<<<< HEAD
                         <c:forEach var="product" items="${adminProducts.content}">
+=======
+                        <c:forEach var="product" items="${products}">
+>>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
                         	<img src="../../../images/product/${product.image2}"/>
                         </c:forEach>
                     </div>
                     <div class="data status">
                     	<span class="data-title">Image3</span>
+<<<<<<< HEAD
                         <c:forEach var="product" items="${adminProducts.content}">
+=======
+                        <c:forEach var="product" items="${products}">
+>>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
                         	<img src="../../../images/product/${product.image3}"/>
                         </c:forEach>
                         
                     </div>
                     <div class="data status">
                         <span class="data-title">Image4</span>
+<<<<<<< HEAD
                         <c:forEach var="product" items="${adminProducts.content}">
+=======
+                        <c:forEach var="product" items="${products}">
+>>>>>>> 21f6e45dcc9b4b62a96c920035305162660f6abb
                         	<img src="../../../images/product/${product.image4}"/>
                         </c:forEach>
                     </div>
