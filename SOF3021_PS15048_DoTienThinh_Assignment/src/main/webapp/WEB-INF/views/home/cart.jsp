@@ -17,7 +17,7 @@
 }
 body {
 	background: #F0F1F3;
-	font-family: montserrat;
+	
 }
 .text3d{
 	font-size: 5em;
@@ -124,6 +124,27 @@ body {
 	background: #fff;
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
+.btn-checkout{
+	background-color: #76bfb6;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-weight: 900;
+    width: 10%;
+    margin-left: 2%;
+    border: none;
+    border-radius: 20px;
+}
+i{
+	margin-right: 15px;
+}
+.btn-checkout:hover{
+background-color: #3972a7;
+}
 .right-bar hr {
 	margin-bottom: 25px;
 }
@@ -133,22 +154,7 @@ body {
 	margin-bottom: 30px;
 	font-size: 18px;
 }
-.right-bar a {
-	background-color: #76bfb6;
-	color: #fff;
-	text-decoration: none;
-	display: block;
-	text-align: center;
-	height: 40px;
-	line-height: 40px;
-	font-weight: 900;
-}
-.right-bar i {
-	margin-right: 15px;
-}
-.right-bar a:hover {
-	background-color: #3972a7;
-}
+
 @media screen and (max-width: 700px) {
 	.content h3 {
 		margin-bottom: 15px;
@@ -226,7 +232,7 @@ body {
 				<hr>
 				<p><span>Total    </span> <span>
 					<fmt:formatNumber value="${shoppingCart.amount + shoppingCart.tax + shoppingCart.shipping}" type="currency" currencySymbol="VND"></fmt:formatNumber>
-				</span></p><a href=""><i class="fa fa-shopping-cart"></i>Checkout</a>
+				</span></p>
 			</div>
 		</div>
 		<form action="/home/cart/checkout" method="post">
@@ -240,7 +246,7 @@ body {
 				<p><span>replacement recipient's name (if any)</span></p>
 				<input type="text" name="orderNote" id="" class="address__input">
 			</div>
-			<button type="submit"><i class="fa fa-shopping-cart"></i>Checkout</button>
+			<button type="submit" class="btn-checkout"><i class="fa fa-shopping-cart"></i>Checkout</button>
 		</form>
 	</div>
 </body>

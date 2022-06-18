@@ -23,7 +23,7 @@
   font-family: "Poppins", sans-serif;
 }
 form {
-  margin: 35px 30px;
+  margin: 0px 30px;
 }
 form.disabled {
   pointer-events: none;
@@ -205,9 +205,9 @@ body.dark .activity-data::-webkit-scrollbar-thumb:hover {
   background: #3a3b3c;
 }
 
-nav {
+.menu__nav {
   position: fixed;
-  top: 0;
+  top: 61px;
   left: 0;
   height: 100%;
   width: 250px;
@@ -216,37 +216,37 @@ nav {
   border-right: 1px solid var(--border-color);
   transition: var(--tran-05);
 }
-nav.close {
+.menu__nav.close {
   width: 73px;
 }
-nav .logo-name {
+.menu__nav .logo-name {
   display: flex;
   align-items: center;
 }
-nav .logo-image {
+.menu__nav .logo-image {
   display: flex;
   justify-content: center;
   min-width: 45px;
 }
-nav .logo-image img {
+.menu__nav .logo-image img {
   width: 40px;
   object-fit: cover;
   border-radius: 50%;
 }
 
-nav .logo-name .logo_name {
+.menu__nav .logo-name .logo_name {
   font-size: 22px;
   font-weight: 600;
   color: var(--text-color);
   margin-left: 14px;
   transition: var(--tran-05);
 }
-nav.close .logo_name {
+.menu__nav.close .logo_name {
   opacity: 0;
   pointer-events: none;
 }
-nav .menu-items {
-  margin-top: 40px;
+.menu__nav .menu-items {
+  margin-top: 5px;
   height: calc(100% - 90px);
   display: flex;
   flex-direction: column;
@@ -290,7 +290,7 @@ body.dark li a:hover:before {
   color: var(--black-light-color);
   transition: var(--tran-05);
 }
-nav.close li a .link-name {
+.menu__nav.close li a .link-name {
   opacity: 0;
   pointer-events: none;
 }
@@ -354,7 +354,7 @@ body.dark .switch:before {
   padding: 10px 14px;
   transition: var(--tran-05);
 }
-nav.close ~ .dashboard {
+.menu__nav.close ~ .dashboard {
   left: 73px;
   width: calc(100% - 73px);
 }
@@ -371,7 +371,7 @@ nav.close ~ .dashboard {
   transition: var(--tran-05);
   z-index: 10;
 }
-nav.close ~ .dashboard .top {
+.menu__nav.close ~ .dashboard .top {
   left: 73px;
   width: calc(100% - 73px);
 }
@@ -466,7 +466,7 @@ nav.close ~ .dashboard .top {
   color: var(--text-color);
 }
 .boxes .box .number {
-  font-size: 40px;
+  font-size: 26px;
   font-weight: 500;
   color: var(--text-color);
 }
@@ -501,7 +501,17 @@ nav.close ~ .dashboard .top {
   font-weight: 400;
   margin-top: 20px;
   white-space: nowrap;
+  text-align: center;
   color: var(--text-color);
+}
+
+.data__list-style-name{
+  padding-bottom: 69px;
+  padding-top: 17px;
+  text-align: center;
+}
+.data__list-style-image{
+  padding-bottom: 40px;
 }
 
 button {
@@ -515,41 +525,41 @@ button:hover {
 }
 
 @media (max-width: 1000px) {
-  nav {
+  .menu__nav {
     width: 73px;
   }
-  nav.close {
+  .menu__nav.close {
     width: 250px;
   }
-  nav .logo_name {
+  .menu__nav .logo_name {
     opacity: 0;
     pointer-events: none;
   }
-  nav.close .logo_name {
+  .menu__nav.close .logo_name {
     opacity: 1;
     pointer-events: auto;
   }
-  nav li a .link-name {
+  .menu__nav li a .link-name {
     opacity: 0;
     pointer-events: none;
   }
-  nav.close li a .link-name {
+  .menu__nav.close li a .link-name {
     opacity: 1;
     pointer-events: auto;
   }
-  nav ~ .dashboard {
+  .menu__nav ~ .dashboard {
     left: 73px;
     width: calc(100% - 73px);
   }
-  nav.close ~ .dashboard {
+  .menu__nav.close ~ .dashboard {
     left: 250px;
     width: calc(100% - 250px);
   }
-  nav ~ .dashboard .top {
+  .menu__nav ~ .dashboard .top {
     left: 73px;
     width: calc(100% - 73px);
   }
-  nav.close ~ .dashboard .top {
+  .menu__nav.close ~ .dashboard .top {
     left: 250px;
     width: calc(100% - 250px);
   }
@@ -570,41 +580,41 @@ button:hover {
   }
 }
 @media (max-width: 400px) {
-  nav {
+  .menu__nav {
     width: 0px;
   }
-  nav.close {
+  .menu__nav.close {
     width: 73px;
   }
-  nav .logo_name {
+  .menu__nav .logo_name {
     opacity: 0;
     pointer-events: none;
   }
-  nav.close .logo_name {
+  .menu__nav.close .logo_name {
     opacity: 0;
     pointer-events: none;
   }
-  nav li a .link-name {
+  .menu__nav li a .link-name {
     opacity: 0;
     pointer-events: none;
   }
-  nav.close li a .link-name {
+  .menu__nav.close li a .link-name {
     opacity: 0;
     pointer-events: none;
   }
-  nav ~ .dashboard {
+  .menu__nav ~ .dashboard {
     left: 0;
     width: 100%;
   }
-  nav.close ~ .dashboard {
+  .menu__nav.close ~ .dashboard {
     left: 73px;
     width: calc(100% - 73px);
   }
-  nav ~ .dashboard .top {
+  .menu__nav ~ .dashboard .top {
     left: 0;
     width: 100%;
   }
-  nav.close ~ .dashboard .top {
+  .menu__nav.close ~ .dashboard .top {
     left: 0;
     width: 100%;
   }
@@ -613,7 +623,7 @@ button:hover {
     </style>
 </head>
 <body>
-<nav>
+<div class="menu__nav">
         <div class="logo-name">
             <div class="logo-image">
                 <!--<img src="images/logo.png" alt="">-->
@@ -656,7 +666,7 @@ button:hover {
                 </li>
             </ul>
         </div>
-    </nav>
+    </div>
 
     <section class="dashboard">
         <div class="top">
@@ -783,100 +793,122 @@ button:hover {
 				
 					<div class="data names">
 					
-                    <span class="data-title" style="width: 120px;" >Product ID</span>
+                    <span class="data-title data__list-style-name" style="width: 120px;" >Product ID</span>
                     <c:forEach var="product" items="${adminProducts.content}">
-                        <span class="data-list">${product.id}</span>
+                        <span class="data-list data__list-style-name">${product.id}</span>
                         </c:forEach>
                     </div>             
                     
                     <div class="data email">
-                        <span class="data-title">Name</span>
+                        <span class="data-title data__list-style-name">Name</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        <span class="data-list">${product.name}</span>
+                        <span class="data-list data__list-style-name">${product.name}</span>
                         </c:forEach>
                     </div>
                     
                     	<div class="data joined">
-                        <span class="data-title">Image1</span>
+                        <span class="data-title data__list-style-name">Image1</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        <img src="../../../images/product/${product.image1}"/>
+                        <span class="data-list data__list-style-image">
+                        <img style="width: 42px;
+                            height: 42px;
+                            margin: 12px;
+                            border: 1px solid #9999;" src="../../../images/product/${product.image1}"/>
+                        </span>
                         </c:forEach>
                     </div>
                     
                     <div class="data type">
-                        <span class="data-title">Image2</span>
+                        <span class="data-title data__list-style-name">Image2</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<img src="../../../images/product/${product.image2}"/>
+                        	 <span class="data-list data__list-style-image">
+                        <img style="width: 42px;
+                            height: 42px;
+                            margin: 12px;
+                            border: 1px solid #9999;" src="../../../images/product/${product.image2}"/>
+                        </span>
                         </c:forEach>
                     </div>
                     <div class="data status">
-                    	<span class="data-title">Image3</span>
+                    	<span class="data-title data__list-style-name">Image3</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<img src="../../../images/product/${product.image3}"/>
+                        	 <span class="data-list data__list-style-image">
+                        <img style="width: 42px;
+                            height: 42px;
+                            margin: 12px;
+                            border: 1px solid #9999;" src="../../../images/product/${product.image3}"/>
+                        </span>
                         </c:forEach>
                         
                     </div>
                     <div class="data status">
-                        <span class="data-title">Image4</span>
+                        <span class="data-title data__list-style-name">Image4</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<img src="../../../images/product/${product.image4}"/>
+                        	 <span class="data-list data__list-style-image">
+                        <img style="width: 42px;
+                            height: 42px;
+                            margin: 12px;
+                            border: 1px solid #9999;" src="../../../images/product/${product.image4}"/>
+                        </span>
                         </c:forEach>
                     </div>
                     <div class="data status">
-                        <span class="data-title">Color</span>
+                        <span class="data-title data__list-style-name">Color</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<span class="data-list">${product.color}</span>
+                        	<span class="data-list data__list-style-name">${product.color}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
-                        <span class="data-title">Price</span>
+                        <span class="data-title data__list-style-name">Price</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<span class="data-list">${product.price}</span>
+                        	<span class="data-list data__list-style-name">${product.price}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
-                        <span class="data-title">Quantity</span>
+                        <span class="data-title data__list-style-name">Quantity</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<span class="data-list">${product.quantity}</span>
+                        	<span class="data-list data__list-style-name">${product.quantity}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
-                        <span class="data-title">Manufactor</span>
+                        <span class="data-title data__list-style-name">Manufactor</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<span class="data-list">${product.manufactor}</span>
+                        	<span class="data-list data__list-style-name">${product.manufactor}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
-                        <span class="data-title">Description</span>
+                        <span class="data-title data__list-style-name">Description</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<span class="data-list">${product.description}</span>
+                        	<span class="data-list data__list-style-name">${product.description}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
-                        <span class="data-title">Discount</span>
+                        <span class="data-title data__list-style-name">Discount</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<span class="data-list">${product.discount}</span>
+                        	<span class="data-list data__list-style-name">${product.discount}</span>
                         </c:forEach>
                     </div>
                     
                     <div class="data status">
-                        <span class="data-title">Category_Id</span>
+                        <span class="data-title data__list-style-name">Category_Id</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        	<span class="data-list">${product.category.id}</span>
+                        	<span class="data-list data__list-style-name">${product.category.id}</span>
                         </c:forEach>
                     </div>
                     <div class="data status">
-                        <span class="data-title">Chỉnh sửa</span>
+                        <span class="data-title data__list-style-name" style="width: 120px;">Chỉnh sửa</span>
                         <c:forEach var="product" items="${adminProducts.content}">
-                        <span class="data-title"><a href="/home/admin/edit/${product.id}">Edit</a></span>                        	
+                        <span class="data-list data__list-style-name"><a href="/home/admin/edit/${product.id}" class="data-list">Edit</a></span>                        	
                         </c:forEach>                                                         
                     </div>
                     <div class="data status">
-                        <span class="data-title">Xoá</span>
+                        <span class="data-title data__list-style-name">Xoá</span>
                         <c:forEach var="product" items="${adminProducts.content}">
+                        <span class="data-list data__list-style-name">
                         <form:form action="/home/admin" modelAttribute="product" enctype="multipart/form-data">
-                        	<span class="data-list"><a href="/home/admin/delete/${product.id}">Delete</a></span>
+                        	<a href="/home/admin/delete/${product.id}" class="data-list">Delete</a>
                         </form:form>
+                        </span>
                         </c:forEach>
                     </div>
                     

@@ -99,6 +99,10 @@ a {
   color: var(--dark-color);
 }
 
+a:hover{
+color: orange;
+}
+
 img {
   max-width: 100%;
   height: auto;

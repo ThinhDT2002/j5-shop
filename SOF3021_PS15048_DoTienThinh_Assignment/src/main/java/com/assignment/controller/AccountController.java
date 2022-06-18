@@ -282,6 +282,8 @@ public class AccountController {
 				}
 				multipartFile.transferTo(file);
 				account.setPhoto(filename);	
+			} else {
+				account.setPhoto(curUser.getPhoto());
 			}
 			accountRepository.save(account);
 			sessionService.setAttribute("user", account);
