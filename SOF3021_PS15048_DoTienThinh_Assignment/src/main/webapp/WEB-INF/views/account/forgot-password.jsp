@@ -88,7 +88,7 @@
                     <h2 class="text-center">Forgot Password</h2>
                     <p class="text-center">${message}</p>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="name" placeholder="Nhập tài khoản của bạn" required
+                        <input class="form-control" type="text" name="username" placeholder="Nhập tài khoản của bạn" required
                             >
                     </div>
                     <div class="form-group">

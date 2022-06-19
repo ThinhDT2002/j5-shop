@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MailInformation {
-	private String from = "DoTienThinh<thinhdtps15048@fpt.edu.vn>";
+	private String from = "TCO Shop <sevennguyen34@gmail.com>";
 	private String to;
 	private String[] cc;
 	private String[] bcc;

@@ -168,7 +168,7 @@ public class AccountController {
 	
 	@RequestMapping("/account/forgot-password")
 	public String getForgotPassword() {
-		return "/account/forgot-password";
+		return "account/forgot-password";
 	}
 	
 	private String retrievePasswordVerifycode = "";
@@ -188,7 +188,7 @@ public class AccountController {
 			mailServiceImplement.send(mailInformation);
 			model.addAttribute("message","Mã xác nhận đã được gửi đi, vuii lòng kiểm tra email của bạn!");
 			return "account/retrieve-password";
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("message","Có lỗi xảy ra");
 			return "account/forgot-password";

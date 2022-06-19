@@ -22,6 +22,7 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
 form {
   margin: 0px 30px;
 }
@@ -104,12 +105,12 @@ form .button-area {
   font-size: 18px;
   cursor: pointer;
   height: 30px;
-  border-radius: 5px;
-  background: #0d6efd;
+  border-radius: 20px;
+  background: linear-gradient(-60deg, #4481eb 0%, #04befe 100%);
   transition: background 0.3s ease;
 }
 .button-area button:hover {
-  background: #025ce3;
+  background: linear-gradient(-45deg, #04befe 0%, #4481eb 100%);
 }
 .button-area span {
   font-size: 17px;
@@ -503,6 +504,10 @@ body.dark .switch:before {
   white-space: nowrap;
   text-align: center;
   color: var(--text-color);
+}
+
+.activity-data .data a:hover{
+	color: orange;
 }
 
 .data__list-style-name{
@@ -1141,6 +1146,7 @@ if(sidebar.classList.contains("close")){
   localStorage.setItem("status", "open");
 }
 })
+document.getElementById('floatingProductId').readOnly=true;
 
 </script>
 </html>
