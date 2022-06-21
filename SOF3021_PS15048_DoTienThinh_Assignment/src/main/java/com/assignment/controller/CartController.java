@@ -56,11 +56,6 @@ public class CartController {
 		model.addAttribute("buyMessage", buyM);
 		return "home/cart";
 	}
-	
-	@RequestMapping("/home/profilecard")
-	public String getCard(Model model) {
-		return "home/profilecard";
-	}
 
 	@RequestMapping("/home/product-detail")
 	public String getProductDetail(Model model, @RequestParam("id") Integer id) {

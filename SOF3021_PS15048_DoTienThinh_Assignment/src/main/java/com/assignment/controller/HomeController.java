@@ -205,7 +205,7 @@ public class HomeController {
 //		model.addAttribute("products", products);
 		return "home/admin";
 	}
-
+	
 	@RequestMapping("/home/admin/update")
 	public String update(Product product) {
 		productRepository.save(product);
@@ -213,7 +213,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/home/admin/delete/{id}")
-	public String create(@PathVariable("id") Integer id) {
+	public String delete(@PathVariable("id") Integer id) {
 		productRepository.deleteById(id);
 		return "redirect:/home/admin";
 	}

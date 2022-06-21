@@ -14,7 +14,10 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry interceptorRegistry) {
 		interceptorRegistry.addInterceptor(authorizeInterceptor)
-							.addPathPatterns("/home/cart/**","/home/cart","/home/order","/account/profilecard","/account/changePassword","/home/admin","/home/admin/**")
-							.excludePathPatterns("/home/index","/home/product-detail","/account/login");
+							.addPathPatterns("/home/cart/**","/home/cart","/home/order",
+									"/account/profilecard","/account/changePassword",
+									"/home/admin","/home/admin/**")
+							.excludePathPatterns("/home/index","/home/product-detail",
+									"/account/login");
 	}
 }
