@@ -452,19 +452,22 @@ form.sign-in-form {
               </a>
             </div>
           </form:form>
-          <form:form action="/account/doSignup" method="post" class="sign-up-form">
+          <form:form modelAttribute="account" action="/account/doSignup" method="post" class="sign-up-form">
             <h2 class="title">Đăng ký</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" name="sign-up-username" placeholder="Tài khoản" />
+              <form:input type="text" path="username" name="sign-up-username" placeholder="Tài khoản" />
+              <form:errors element="h6" path="username"/>
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" name="sign-up-email" placeholder="Email" />
+              <form:input type="email" path="email" name="sign-up-email" placeholder="Email" />
+              <form:errors element="h6" path="email"/>
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" name="sign-up-password" placeholder="Mật khẩu" />
+              <form:input type="password" path="password" name="sign-up-password" placeholder="Mật khẩu" />
+              <form:errors element="h6" path="password"/>
             </div>
             <input type="submit" class="btn" value="Đăng ký" />
             <p class="social-text">Hoặc Đăng ký với các nền tảng xã hội</p>

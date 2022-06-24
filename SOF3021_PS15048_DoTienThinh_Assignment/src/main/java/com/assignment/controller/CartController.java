@@ -48,7 +48,6 @@ public class CartController {
 	@RequestMapping("/home/cart")
 	public String getCart(Model model, @RequestParam("errorQuantity") Optional<String> errorQuantityMessage,
 			@RequestParam("buyMessage") Optional<String> buyMessage) {
-//		model.addAttribute("shoppingCart", shoppingCart);
 		String errorQuantityM = errorQuantityMessage.orElse("");
 		String buyM = buyMessage.orElse("");
 		model.addAttribute("newPrice", newPrice);
@@ -107,8 +106,6 @@ public class CartController {
 		try {
 			Account currentUser = sessionService.getAttribute("user");
 			double totalPrice = shoppingCart.getAmount() + shoppingCart.getTax() + shoppingCart.getShipping();
-	//		int orderId = ordersRepository.CreateOrder(currentUser.getUsername(), new Date(), address, phonenumber, note, 1, totalPrice);
-	//		System.out.println("Id vua them vao: " + orderId);
 			Orders orders = new Orders();
 			orders.setAccount(currentUser);
 			orders.setCreateDate(new Date());

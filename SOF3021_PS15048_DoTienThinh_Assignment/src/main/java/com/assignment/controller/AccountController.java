@@ -1,14 +1,14 @@
 package com.assignment.controller;
 
 
-import java.io.File;
 
-import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.assignment.model.Account;
-import com.assignment.model.MailInformation;
-import com.assignment.model.VerifyAccount;
+import com.assignment.service.account.SignUpAccount;
+import com.assignment.service.account.UpdateAccount;
+import com.assignment.service.account.VerifySignUpAccount;
+import com.assignment.service.account.ChangePassword;
+import com.assignment.service.account.ForgotPassword;
+import com.assignment.service.account.LoginAccount;
 import com.assignment.service.database.AccountRepository;
 import com.assignment.service.database.VerifyAccountRepository;
 import com.assignment.service.mail.MailServiceImplement;
@@ -43,8 +47,18 @@ public class AccountController {
 	ShoppingCartServiceImplement shoppingCart;
 	@Autowired
 	ServletContext context;
-	
-	private static final String URL_PHOTO = System.getProperty("user.dir") + "/src/main/webapp/images/account/";
+	@Autowired
+	LoginAccount loginAccount;
+	@Autowired
+	SignUpAccount signUpAccount;
+	@Autowired
+	VerifySignUpAccount verifySignUpAccount;
+	@Autowired
+	ForgotPassword forgotPassword;
+	@Autowired
+	ChangePassword changePassword;
+	@Autowired
+	UpdateAccount updateAccount;
 	
 	@ModelAttribute("shoppingCart")
 	public ShoppingCartServiceImplement getShoppingCart() {
@@ -52,110 +66,66 @@ public class AccountController {
 	}
 	
 	@RequestMapping("/account/login")
-	public String getLogin() {
-		Account account = sessionService.getAttribute("user");
+	public String getLogin(@ModelAttribute("account") Account account) {
+		account = sessionService.getAttribute("user");
 		if(account != null) {
 			return "redirect:/home/index";
+		} else {
+			account = new Account();
 		}
 		return "account/login";
 	}
 	
 	@RequestMapping("/account/doLogin")
 	public String doLogin(Model model,@RequestParam("login-username") String username,
-			@RequestParam("login-password") String password) {
-		Account account = accountRepository.findAccountByUsername(username);
-		if(account == null) {
-			model.addAttribute("message","Username or password is incorrect!");
-			return "account/login";
-		} else {
-			if(account.getPassword().equals(password)) {
-				if(account.getActivated()) {
-					sessionService.setAttribute("user", account);
-					return "redirect:/home/index";
-				} else {
-					model.addAttribute("message", "Account is not verify!");
-					return "account/login";
-				}
-			} else {
-				model.addAttribute("message","Username or password is incorrect!");
+			@RequestParam("login-password") String password,
+			@ModelAttribute("account") Account accountRegister) {
+		accountRegister = new Account();
+		String message = loginAccount.login(username, password);
+		switch(message) {
+			case "Tài khoản hoặc mật khẩu không chính xác":
+				model.addAttribute("message", message);
 				return "account/login";
-			}
+			case "Đăng nhập thành công":
+				return "redirect:/home/index";
+			case "Tài khoản chưa được kích hoạt":
+				model.addAttribute("message", message);
+				return "account/login";
+			default:
+				return "account/login";
 		}
 	}
 	
 	@RequestMapping("/account/doSignup")
-	public String doSignUp(Model model, @RequestParam("sign-up-username") String username,
-			@RequestParam("sign-up-email") String email,
-			@RequestParam("sign-up-password") String password) {
-		try {
-			Account existAccount = accountRepository.findAccountByUsername(username);
-			if(existAccount != null) {
-				if(existAccount.getActivated()) {
-					model.addAttribute("message","Tài khoản đã tồn tại!");
-					return "account/login";
-				}
-				else {
-					VerifyAccount verifyAccountExist = verifyAccountRepository.findVerifyAccountByUsername(username);
-					verifyAccountRepository.delete(verifyAccountExist);
-					Account account = new Account();
-					account.setUsername(username);
-					account.setPassword(password);
-					account.setEmail(email);
-					account.setAdmin(false);
-					account.setActivated(false);
-					accountRepository.save(account);
-					String verifyCode = username + String.valueOf(passwordUtil.generatePassword(8));
-					VerifyAccount verifyAccount = new VerifyAccount(username, account, verifyCode);
-					verifyAccountRepository.save(verifyAccount);
-					MailInformation mailInformation = new MailInformation();
-					mailInformation.setTo(email);
-					String verifyURL = "http://localhost:8080/account/verify?code=" + verifyCode;
-					String subject = "Xác nhận tài khoản";
-					String mailMessage = "Click vào đây để kích hoạt tài khoản của bạn: \r\n"+ verifyURL;
-					mailInformation.setSubject(subject);
-					mailInformation.setBody(mailMessage);
-					mailServiceImplement.send(mailInformation);
-					model.addAttribute("message","Đăng ký thành công, truy cập vào email để xác nhận tài khoản");
-					return "account/login";
-				}
-			} 
-			else {
-				Account account = new Account();
-				account.setUsername(username);
-				account.setPassword(password);
-				account.setEmail(email);
-				account.setAdmin(false);
-				account.setActivated(false);
-				accountRepository.save(account);
-				String verifyCode = username + String.valueOf(passwordUtil.generatePassword(8));
-				VerifyAccount verifyAccount = new VerifyAccount(username, account, verifyCode);
-				verifyAccountRepository.save(verifyAccount);
-				MailInformation mailInformation = new MailInformation();
-				mailInformation.setTo(email);
-				String verifyURL = "http://localhost:8080/account/verify?code=" + verifyCode;
-				String subject = "Xác nhận tài khoản";
-				String mailMessage = "Click vào đây để kích hoạt tài khoản của bạn: \r\n"+ verifyURL;
-				mailInformation.setSubject(subject);
-				mailInformation.setBody(mailMessage);
-				mailServiceImplement.send(mailInformation);
-				model.addAttribute("message","Đăng ký thành công, truy cập vào email để xác nhận tài khoản");
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			model.addAttribute("message","Đăng ký thất bại!");
+	public String doSignUp(Model model,@Valid @ModelAttribute("account") Account accountRegister,
+			Errors errors) {
+		if(errors.hasErrors()) {
+			return "account/login";
 		}
-		return "account/login";
+		else {
+			String message = signUpAccount.signUp(accountRegister);
+			switch(message) {
+			case "Tài khoản đã tồn tại!":
+				model.addAttribute("message", message);
+				return "account/login";
+			case "Đăng ký thất bại":
+				model.addAttribute("message", message);
+				return "account/login";
+			case "Đăng ký thành công, truy cập vào email để xác nhận tài khoản":
+				model.addAttribute("message", message);
+				return "account/login";
+			default:
+				model.addAttribute("message", "Đã xảy ra lỗi ngoài ý muốn, hãy thử lại");
+				return "account/login";
+			}
+		}
 	}
 	@RequestMapping("/account/verify")
 	public String verifyAccount(Model model,@RequestParam("code") String verifyCode) {
-		try {
-			VerifyAccount verifyAccount = verifyAccountRepository.findVerifyAccountByVerifyCode(verifyCode);
-			Account account = accountRepository.findAccountByUsername(verifyAccount.getUsername());
-			account.setActivated(true);
-			accountRepository.save(account);
+		String message = verifySignUpAccount.verifyAccount(verifyCode);
+		if(message.equals("Thành công")) {
 			return "/account/verifySuccess";
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} else {
 			return "/account/verifyError";
 		}
 	}
@@ -171,49 +141,26 @@ public class AccountController {
 		return "account/forgot-password";
 	}
 	
-	private String retrievePasswordVerifycode = "";
-	private String currentUsernameForgotPassword = "";
-	
 	@RequestMapping("/account/retrieve-password")
 	public String retrievePasword(Model model,@RequestParam("username") String username){
-		try {
-			Account account = accountRepository.findAccountByUsername(username);
-			currentUsernameForgotPassword = username;
-			MailInformation mailInformation = new MailInformation();
-			mailInformation.setTo(account.getEmail());
-			mailInformation.setSubject("Quên mật khẩu");
-			String verifyCode = String.valueOf(passwordUtil.generatePassword(6));
-			retrievePasswordVerifycode = verifyCode;
-			mailInformation.setBody("Mã xác nhận của bạn là: \r\n" + verifyCode);
-			mailServiceImplement.send(mailInformation);
+		String message = forgotPassword.retrievePassword(username);
+		if(message.equals("Thành công")) {
 			model.addAttribute("message","Mã xác nhận đã được gửi đi, vuii lòng kiểm tra email của bạn!");
 			return "account/retrieve-password";
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else {
 			model.addAttribute("message","Có lỗi xảy ra");
 			return "account/forgot-password";
 		}
 	}
 	
 	@RequestMapping("/account/submit-retrieve-password")
-	public String submitNewPassword(Model model, @RequestParam("verifyCode") String verifyCode,
+	public String submitNewPassword(Model model, 
+			@RequestParam("verifyCode") String verifyCode,
 			@RequestParam("password") String password,
 			@RequestParam("confirm-password") String confirmPassword) {
-		if(!verifyCode.equals(retrievePasswordVerifycode)) {
-			model.addAttribute("message","Verify code incorrect!");
-			return "account/retrieve-password";
-		} else {
-			if(!password.equals(confirmPassword)) {
-				model.addAttribute("message","Confirm password is incorrect!");
-				return "account/retrieve-password";
-			} else {
-				Account account = accountRepository.findAccountByUsername(currentUsernameForgotPassword);
-				account.setPassword(password);
-				accountRepository.save(account);
-				model.addAttribute("message","Recovery password success!");
-				return "account/retrieve-password";
-			}
-		}
+		String message = forgotPassword.submitNewPassword(verifyCode, password, confirmPassword);
+		model.addAttribute("message", message);
+		return "account/retrieve-password";
 	}
 	
 	@GetMapping("/account/changePassword")
@@ -225,26 +172,9 @@ public class AccountController {
 	public String doChangePassword(Model model, @RequestParam("oldPassword") String oldPassword,
 			@RequestParam("newPassword") String newPassword,
 			@RequestParam("confirmPassword") String confirmPassword) {
-		Account account = sessionService.getAttribute("user");
-		if(account != null) {
-			if(!account.getPassword().equals(oldPassword)) {
-				model.addAttribute("changePasswordMessage","Password is incorrect!");
-				return "account/changePassword";
-			} 
-			else if(!newPassword.equals(confirmPassword)){
-				model.addAttribute("changePasswordMessage","Confirm password is incorrect!");
-				return "account/changePassword";
-			}
-			else {
-				account.setPassword(newPassword);
-				accountRepository.save(account);
-				model.addAttribute("changePasswordMessage", "Change password success!");
-				return "account/changePassword";
-			}
-		} else {
-			model.addAttribute("changePasswordMessage", "No account found!");
-			return "account/changePassword";
-		}
+		String message = changePassword.changePassword(oldPassword, newPassword, confirmPassword);
+		model.addAttribute("changePasswordMessage",message);
+		return "account/changePassword";
 	}
 		
 	@GetMapping("/account/profilecard")
@@ -261,37 +191,8 @@ public class AccountController {
 	@PostMapping("/account/profilecard")
 	public String updateAccount(@ModelAttribute("account") Account account,
 			@RequestParam("avatar") MultipartFile multipartFile, Model model) {
-		Account curUser = sessionService.getAttribute("user");
-		try {
-			account.setUsername(curUser.getUsername());
-			account.setPassword(curUser.getPassword());
-			account.setEmail(account.getEmail());
-			account.setFullname(account.getFullname());
-			account.setPhonenumber(account.getPhonenumber());
-			account.setActivated(curUser.getActivated());
-			if(curUser.getAdmin() == false || curUser.getAdmin() == null) {
-				account.setAdmin(false);
-			} else {
-				account.setAdmin(true);
-			}
-			if(!multipartFile.isEmpty()) {
-				String filename = multipartFile.getOriginalFilename();
-				File file = new File(URL_PHOTO + filename);
-				if(!file.exists()) {
-					file.mkdirs();
-				}
-				multipartFile.transferTo(file);
-				account.setPhoto(filename);	
-			} else {
-				account.setPhoto(curUser.getPhoto());
-			}
-			accountRepository.save(account);
-			sessionService.setAttribute("user", account);
-			model.addAttribute("updateAccountMessage","Update account success!");
-		} catch(Exception ex) {
-			ex.printStackTrace();
-			model.addAttribute("updateAccountMessage","Update account failed!");
-		}
+		String message = updateAccount.updateProfile(account, multipartFile);
+		model.addAttribute("updateAccountMessage",message);
 		return "account/profilecard";
 	}
 	

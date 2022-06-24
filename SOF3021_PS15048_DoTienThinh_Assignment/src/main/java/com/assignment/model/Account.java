@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Accounts")
@@ -23,14 +25,20 @@ public class Account implements Serializable {
 
 	@Id
 	@Column(name = "Username")
+	@NotBlank(message = "Vui lòng nhập tài khoản")
+	@Size(min = 5, max = 30, message = "Tài khoản phải từ 5 - 30 kí tự")
 	private String username;
 	@Column(name = "Password")
+	@NotBlank(message = "Vui lòng nhập mật khẩu")
+	@Size(min = 5, max = 30, message = "Mật khẩu phải từ 5 - 30 kí tự")
 	private String password;
 	@Column(name = "Fullname")
 	private String fullname;
 	@Column(name = "Phonenumber")
 	private String phonenumber;
 	@Column(name = "Email")
+	@NotBlank(message = "Vui lòng nhập địa chỉ mail")
+	@Size(max = 30, message = "Email quá dài")
 	private String email;
 	@Column(name = "Photo")
 	private String photo;

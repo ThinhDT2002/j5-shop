@@ -72,7 +72,7 @@
 							</div>
 							<div class="col-sm-6">
 								<p class="font-weight-bold">Photo:</p>
-								<input type="file" name="avatar"></input>
+								<input type="file" accept=".jpg,.png" name="avatar"></input>
 							</div>
 						</div>
 						<hr class="bg-primary">

@@ -27,6 +27,7 @@ import com.assignment.service.database.AccountRepository;
 import com.assignment.service.database.OrdersDetailRepository;
 import com.assignment.service.database.OrdersRepository;
 import com.assignment.service.database.ProductRepository;
+import com.assignment.service.product.SaveProductImage;
 import com.assignment.service.session.SessionService;
 import com.assignment.service.shoppingCart.ShoppingCartServiceImplement;
 
@@ -46,6 +47,8 @@ public class HomeController {
 	ServletContext app;
 	@Autowired
 	AccountRepository accountRepository;
+	@Autowired
+	SaveProductImage saveImage;
 	
 	@ModelAttribute("shoppingCart")
 	public ShoppingCartServiceImplement getShoppingCart() {
@@ -53,15 +56,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/home/index")
-	public String getIndex(Model model, @RequestParam("p") Optional<Integer> p,
+	public String getIndex(Model model, @RequestParam("p") Optional<Integer> pageNumber,
 			@RequestParam("category") Optional<String> category) {
-		String ctegory = category.orElse("%");
-		model.addAttribute("category",ctegory);
-		Pageable pageable = PageRequest.of(p.orElse(0), 8);
-		Page<Product> products = productRepository.findAllByCategoryIdLike(ctegory,pageable);
+		model.addAttribute("category",category.orElse("%"));
+		Pageable pageable = PageRequest.of(pageNumber.orElse(0), 8);
+		Page<Product> products = productRepository.findAllByCategoryIdLike(category.orElse("%"),pageable);
 		model.addAttribute("products", products);
-//		Account account = sessionService.getAttribute("user");
-//		System.out.println(account.getFullname());
 		return "home/index";
 	}
 	
@@ -72,14 +72,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/home/admin")
-	public String getAccount(Model model, @RequestParam("p") Optional<Integer> p) {
+	public String getAccount(Model model) {
 		Product product = new Product();
 		model.addAttribute("product", product);
-//		Pageable pageable = PageRequest.of(p.orElse(0), 10);
-//		Page<Product> products = productRepository.findAll(pageable);
-//		model.addAttribute("products", products);
-//		List<Account> items = accountRepository.findAll();
-//		model.addAttribute("items", items);
 		return "home/admin";
 	}
 	
@@ -143,53 +138,21 @@ public class HomeController {
 		if(product.getId() != null) {
 			product = productRepository.findProductById(product.getId());
 		}
-		if(!multipartFile1.isEmpty()) {
-			String path = app.getRealPath("/"); // nó lấy đường dẫn webapp		
-			System.out.println("path : " + path);	
-			String fileName = multipartFile1.getOriginalFilename();
-			File file = new File(path + "/images/product/" + fileName);
-			
-			if(!file.exists()) {
-				file.mkdirs();
-			}
-			product.setImage1(fileName);	
-			multipartFile1.transferTo(file);
-//			System.out.println(file);
-//			System.out.println(file.getAbsolutePath());
-//			System.out.println(multipartFile.getOriginalFilename());
+		String image1 = saveImage.save(multipartFile1);
+		String image2 = saveImage.save(multipartFile2);
+		String image3 = saveImage.save(multipartFile3);
+		String image4 = saveImage.save(multipartFile4);
+		if(!image1.equals("")) {
+			product.setImage1(image1);
 		}
-		if(!multipartFile2.isEmpty()) {
-			String path = app.getRealPath("/"); // nó lấy đường dẫn webapp
-			System.out.println("path : " + path);
-			String fileName = multipartFile2.getOriginalFilename();
-			File file = new File(path + "/images/product/" + fileName);
-			if(!file.exists()) {
-				file.mkdirs();
-			}
-			product.setImage2(fileName);
-			multipartFile2.transferTo(file);
+		if(!image2.equals("")) {
+			product.setImage2(image2);
 		}
-		if(!multipartFile3.isEmpty()) {
-			String path = app.getRealPath("/"); // nó lấy đường dẫn webapp
-			System.out.println("path : " + path);
-			String fileName = multipartFile3.getOriginalFilename();
-			File file = new File(path + "/images/product/" + fileName);
-			if(!file.exists()) {
-				file.mkdirs();
-			}
-			product.setImage3(fileName);
-			multipartFile3.transferTo(file);
+		if(!image3.equals("")) {
+			product.setImage3(image3);
 		}
-		if(!multipartFile4.isEmpty()) {
-			String path = app.getRealPath("/"); // nó lấy đường dẫn webapp
-			System.out.println("path : " + path);
-			String fileName = multipartFile4.getOriginalFilename();
-			File file = new File(path + "/images/product/" + fileName);
-			if(!file.exists()) {
-				file.mkdirs();
-			}
-			product.setImage4(fileName);
-			multipartFile4.transferTo(file);
+		if(!image4.equals("")) {
+			product.setImage4(image4);
 		}
 		productRepository.save(product);
 		return "redirect:/home/admin";
@@ -200,9 +163,6 @@ public class HomeController {
 			@RequestParam("p") Optional<Integer> p) {
 		Product product = productRepository.findById(id).get();
 		model.addAttribute("product", product);
-//		Pageable pageable = PageRequest.of(p.orElse(0), 10);
-//		Page<Product> products = productRepository.findAll(pageable);
-//		model.addAttribute("products", products);
 		return "home/admin";
 	}
 	

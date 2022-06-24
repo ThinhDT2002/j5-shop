@@ -961,28 +961,28 @@ button:hover {
                         <label for="file-Image1">Image1</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="attach-file1" id="file-Image1" placeholder="Image1" >
+                                <input type="file" name="attach-file1" accept=".jpg,.png" id="file-Image1" placeholder="Image1" >
                                 
                             </div>
                         </div>
                         <label for="file-Image2">Image2</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="attach-file2" id="file-Image2" placeholder="Image2">
+                                <input type="file" name="attach-file2" accept=".jpg,.png" id="file-Image2" placeholder="Image2">
                                 
                             </div>
                         </div>
                         <label for="file-Image2">Image3</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="attach-file3" id="file-Image3" placeholder="Image3">
+                                <input type="file" name="attach-file3" accept=".jpg,.png" id="file-Image3" placeholder="Image3">
                                 
                             </div>
                         </div>
                         <label for="file-Image4">Image4</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <input type="file" name="attach-file4" id="file-Image4" placeholder="Image4">
+                                <input type="file" name="attach-file4" accept=".jpg,.png" id="file-Image4" placeholder="Image4">
                                 
                             </div>
                         </div>
