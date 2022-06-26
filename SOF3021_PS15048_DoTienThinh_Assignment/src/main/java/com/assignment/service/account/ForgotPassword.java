@@ -37,7 +37,7 @@ public class ForgotPassword {
 	
 	public String submitNewPassword(String verifyCode,String password, String confirmPassword) {
 		String forgotPasswordVerifyCode = sessionService.getAttribute("forgotPasswordVerifyCode");
-		if(!verifyCode.endsWith(forgotPasswordVerifyCode)) {
+		if(!verifyCode.equals(forgotPasswordVerifyCode)) {
 			return "Mã xác nhận không đúng!";
 		} else {
 			if(!password.equals(confirmPassword)) {

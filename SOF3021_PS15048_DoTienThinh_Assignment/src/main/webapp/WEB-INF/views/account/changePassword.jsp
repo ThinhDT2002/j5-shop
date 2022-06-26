@@ -91,7 +91,7 @@
                         <input class="form-control" type="password" name="oldPassword" placeholder="Nhập mật khẩu hiện tại" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="password" name="newPassword" placeholder="Nhập mật khẩu mới" required>
+                        <input class="form-control" type="password" name="newPassword" minlength="5" maxlength="30" placeholder="Nhập mật khẩu mới" required>
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="password" name="confirmPassword" placeholder="Xác nhận mật khẩu mới" required>

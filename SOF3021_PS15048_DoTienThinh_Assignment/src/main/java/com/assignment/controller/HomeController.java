@@ -1,11 +1,11 @@
 package com.assignment.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletContext;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +21,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.assignment.model.Account;
+import com.assignment.model.Category;
 import com.assignment.model.Orders;
 import com.assignment.model.OrdersDetail;
 import com.assignment.model.Product;
 import com.assignment.service.database.AccountRepository;
+import com.assignment.service.database.CategoryRepository;
 import com.assignment.service.database.OrdersDetailRepository;
 import com.assignment.service.database.OrdersRepository;
 import com.assignment.service.database.ProductRepository;
+import com.assignment.service.product.CreateProduct;
 import com.assignment.service.product.SaveProductImage;
 import com.assignment.service.session.SessionService;
 import com.assignment.service.shoppingCart.ShoppingCartServiceImplement;
@@ -49,7 +53,10 @@ public class HomeController {
 	AccountRepository accountRepository;
 	@Autowired
 	SaveProductImage saveImage;
-	
+	@Autowired
+	CreateProduct createProduct;
+	@Autowired
+	CategoryRepository categoryRepository;
 	@ModelAttribute("shoppingCart")
 	public ShoppingCartServiceImplement getShoppingCart() {
 		return shoppingCart;
@@ -83,6 +90,12 @@ public class HomeController {
 		Pageable pageable = PageRequest.of(p.orElse(0), 10);
 		Page<Product> products = productRepository.findAll(pageable);
 		return products;
+	}
+	
+	@ModelAttribute("comboBoxCategory")
+	public List<Category> getCategories() {
+		List<Category> categories = categoryRepository.findAll();
+		return categories;
 	}
 	
 	@ModelAttribute("adminUsers")
@@ -130,31 +143,37 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/home/admin/create")
-	public String createProduct(Product product, 
+	public String createProduct(Model model,@Valid Product product, Errors errors, 
 			@RequestParam("attach-file1") MultipartFile multipartFile1,
 			@RequestParam("attach-file2") MultipartFile multipartFile2,
 			@RequestParam("attach-file3") MultipartFile multipartFile3,
 			@RequestParam("attach-file4") MultipartFile multipartFile4) throws IllegalStateException, IOException{
-		if(product.getId() != null) {
-			product = productRepository.findProductById(product.getId());
+		boolean productValid = true;
+		if(errors.hasErrors()) {
+			productValid = false;
 		}
-		String image1 = saveImage.save(multipartFile1);
-		String image2 = saveImage.save(multipartFile2);
-		String image3 = saveImage.save(multipartFile3);
-		String image4 = saveImage.save(multipartFile4);
-		if(!image1.equals("")) {
-			product.setImage1(image1);
+		if(multipartFile1.getOriginalFilename().length() > 65) {
+			productValid = false;
+			model.addAttribute("errorImg1", "Tên ảnh quá dài");
 		}
-		if(!image2.equals("")) {
-			product.setImage2(image2);
+		if(multipartFile2.getOriginalFilename().length() > 65) {
+			productValid = false;
+			model.addAttribute("errorImg2", "Tên ảnh quá dài");
 		}
-		if(!image3.equals("")) {
-			product.setImage3(image3);
+		if(multipartFile3.getOriginalFilename().length() > 65) {
+			productValid = false;
+			model.addAttribute("errorImg3", "Tên ảnh quá dài");
 		}
-		if(!image4.equals("")) {
-			product.setImage4(image4);
+		if(multipartFile4.getOriginalFilename().length() > 65) {
+			productValid = false;
+			model.addAttribute("errorImg4", "Tên ảnh quá dài");
 		}
-		productRepository.save(product);
+		if(!productValid) {
+			return "home/admin";
+		}
+		
+		createProduct.create(product, multipartFile1, multipartFile2, multipartFile3, multipartFile4);
+		
 		return "redirect:/home/admin";
 	}
 

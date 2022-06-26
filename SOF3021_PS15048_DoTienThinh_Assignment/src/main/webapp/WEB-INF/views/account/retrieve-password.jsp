@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,10 +92,11 @@
                         <input class="form-control" type="text" name="verifyCode" placeholder="Mã xác nhận" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="password" name="password" placeholder="Mật khẩu mới" required>
+                        <input class="form-control" type="password" name="password" min="5" minlength="5" maxlength="30" placeholder="Mật khẩu mới" required/>
+                        <h6>${errorPassword}</h6>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="password" name="confirm-password" placeholder="Xác nhận mật khẩu" required>
+                        <input class="form-control" type="password" name="confirm-password" placeholder="Xác nhận mật khẩu" required/>
                     </div>
                     <div class="form-group">
                         <input class="form-control button" type="submit" value="Lấy lại mật khẩu">

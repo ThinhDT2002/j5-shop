@@ -4,6 +4,8 @@ package com.assignment.controller;
 
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,7 +68,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping("/account/login")
-	public String getLogin(@ModelAttribute("account") Account account) {
+	public String getLogin(Account account) {
 		account = sessionService.getAttribute("user");
 		if(account != null) {
 			return "redirect:/home/index";
@@ -97,27 +99,15 @@ public class AccountController {
 	}
 	
 	@RequestMapping("/account/doSignup")
-	public String doSignUp(Model model,@Valid @ModelAttribute("account") Account accountRegister,
+	public String doSignUp(Model model,@Valid Account accountRegister,
 			Errors errors) {
 		if(errors.hasErrors()) {
 			return "account/login";
 		}
 		else {
 			String message = signUpAccount.signUp(accountRegister);
-			switch(message) {
-			case "Tài khoản đã tồn tại!":
-				model.addAttribute("message", message);
-				return "account/login";
-			case "Đăng ký thất bại":
-				model.addAttribute("message", message);
-				return "account/login";
-			case "Đăng ký thành công, truy cập vào email để xác nhận tài khoản":
-				model.addAttribute("message", message);
-				return "account/login";
-			default:
-				model.addAttribute("message", "Đã xảy ra lỗi ngoài ý muốn, hãy thử lại");
-				return "account/login";
-			}
+			model.addAttribute("message", message);
+			return "account/login";
 		}
 	}
 	@RequestMapping("/account/verify")
@@ -145,7 +135,7 @@ public class AccountController {
 	public String retrievePasword(Model model,@RequestParam("username") String username){
 		String message = forgotPassword.retrievePassword(username);
 		if(message.equals("Thành công")) {
-			model.addAttribute("message","Mã xác nhận đã được gửi đi, vuii lòng kiểm tra email của bạn!");
+			model.addAttribute("message","Mã xác nhận đã được gửi đi, vui lòng kiểm tra email của bạn!");
 			return "account/retrieve-password";
 		} else {
 			model.addAttribute("message","Có lỗi xảy ra");
@@ -155,12 +145,18 @@ public class AccountController {
 	
 	@RequestMapping("/account/submit-retrieve-password")
 	public String submitNewPassword(Model model, 
-			@RequestParam("verifyCode") String verifyCode,
-			@RequestParam("password") String password,
-			@RequestParam("confirm-password") String confirmPassword) {
-		String message = forgotPassword.submitNewPassword(verifyCode, password, confirmPassword);
-		model.addAttribute("message", message);
-		return "account/retrieve-password";
+			@RequestParam("verifyCode") String verifyCode,	
+			@RequestParam("confirm-password") String confirmPassword,
+			@RequestParam("password") String password) {
+		if(password.length() < 5 || password.length() > 30) {
+			model.addAttribute("errorPassword", "Mật khẩu phải từ 5 - 30 kí tự");
+			return "account/retrieve-password";
+		} 
+		else {
+			String message = forgotPassword.submitNewPassword(verifyCode, password, confirmPassword);
+			model.addAttribute("message", message);
+			return "account/retrieve-password";
+		}
 	}
 	
 	@GetMapping("/account/changePassword")
@@ -172,6 +168,10 @@ public class AccountController {
 	public String doChangePassword(Model model, @RequestParam("oldPassword") String oldPassword,
 			@RequestParam("newPassword") String newPassword,
 			@RequestParam("confirmPassword") String confirmPassword) {
+		if(newPassword.length() < 5 || newPassword.length() > 30) {
+			model.addAttribute("changePasswordMessage", "Mật khẩu mới phải từ 5 - 30 kí tự");
+			return "account/changePassword";
+		}
 		String message = changePassword.changePassword(oldPassword, newPassword, confirmPassword);
 		model.addAttribute("changePasswordMessage",message);
 		return "account/changePassword";

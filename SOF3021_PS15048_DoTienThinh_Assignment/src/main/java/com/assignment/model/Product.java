@@ -12,6 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Entity
 @Table(name = "Products")
 public class Product implements Serializable{
@@ -25,6 +32,8 @@ public class Product implements Serializable{
 	@Column(name = "ProductId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotBlank(message = "Chưa nhập tên sản phẩm")
+	@Size(max = 60, message = "Tên sản phẩm quá dài")
 	@Column(name = "Name")
 	private String name;
 	@Column(name = "Image1")
@@ -37,8 +46,13 @@ public class Product implements Serializable{
 	private String image4;
 	@Column(name = "Color")
 	private String color;
+	@DecimalMin(value = "1000.0", message = "Nhập giá lớn hơn 1000 vnđ")
+	@DecimalMax(value= "9999999999.99", message = "Nhập giá nhỏ hơn 9999999999.99 vnđ")
+	@NotNull(message = "Nhập giá sản phẩm")
 	@Column(name = "Price")
 	private Double price;
+	@NotNull(message = "Nhập số lượng sản phẩm")
+	@Min(value = 0, message = "Số lượng sản phẩm phải >= 0")
 	@Column(name = "Quantity")
 	private Integer quantity;
 	@Column(name = "Manufactor")
@@ -47,6 +61,7 @@ public class Product implements Serializable{
 	private String description;
 	@Column(name = "Discount")
 	private Integer discount;
+	@NotNull(message = "Chọn danh mục sản phẩm")
 	@ManyToOne
 	@JoinColumn(name = "CategoryId")
 	private Category category;

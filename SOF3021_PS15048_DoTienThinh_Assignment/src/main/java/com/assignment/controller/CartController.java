@@ -103,6 +103,24 @@ public class CartController {
 	@RequestMapping("/home/cart/checkout")
 	public String checkoutShoppingCart(Model model, @RequestParam("address") String address,
 			@RequestParam("phonenumber") String phonenumber, @RequestParam("orderNote") String note, RedirectAttributes redirectAttributes) {
+		boolean orderValid = true;
+		String buyMessage = "";
+		if(address.trim().equals("")) {
+			buyMessage += "Hãy nhập địa điểm giao hàng";
+			orderValid = false;
+		}
+		if(!phonenumber.matches("^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$")) {
+			if(buyMessage.length() > 0) {
+				buyMessage += ", số điện thoại";
+			} else {
+				buyMessage +=  "Hãy nhập số điện thoại";
+			}
+			orderValid = false;
+		}
+		if(!orderValid) {
+			redirectAttributes.addAttribute("buyMessage", buyMessage);
+			return "redirect:/home/cart";
+		}
 		try {
 			Account currentUser = sessionService.getAttribute("user");
 			double totalPrice = shoppingCart.getAmount() + shoppingCart.getTax() + shoppingCart.getShipping();

@@ -955,6 +955,7 @@ button:hover {
                         <div class="dbl-field">
                             <div class="field">
                                 <form:input id="floatProductName" path="name" placeholder="Name" />
+                                <form:errors element="h6" path="name"/>
                                 <i class='fas fa-envelope'></i>
                             </div>
                         </div>
@@ -962,28 +963,28 @@ button:hover {
                         <div class="dbl-field">
                             <div class="field">
                                 <input type="file" name="attach-file1" accept=".jpg,.png" id="file-Image1" placeholder="Image1" >
-                                
+                                <h6>${errorImg1}</h6>
                             </div>
                         </div>
                         <label for="file-Image2">Image2</label>
                         <div class="dbl-field">
                             <div class="field">
                                 <input type="file" name="attach-file2" accept=".jpg,.png" id="file-Image2" placeholder="Image2">
-                                
+                                <h6>${errorImg2}</h6>
                             </div>
                         </div>
                         <label for="file-Image2">Image3</label>
                         <div class="dbl-field">
                             <div class="field">
                                 <input type="file" name="attach-file3" accept=".jpg,.png" id="file-Image3" placeholder="Image3">
-                                
+                                <h6>${errorImg3}</h6>
                             </div>
                         </div>
                         <label for="file-Image4">Image4</label>
                         <div class="dbl-field">
                             <div class="field">
                                 <input type="file" name="attach-file4" accept=".jpg,.png" id="file-Image4" placeholder="Image4">
-                                
+                                <h6>${errorImg4}</h6>
                             </div>
                         </div>
                         <label for="floatProductColor">Color</label>
@@ -996,15 +997,15 @@ button:hover {
                         <label for="floatProductPrice">Price</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <form:input  id="floatProductPrice" path="price" placeholder="Price" />
-                               
+                                <form:input  id="floatProductPrice" type="number" path="price" placeholder="Price" />
+                               	<form:errors element="h6" path="price"/>
                             </div>
                         </div>
                         <label for="floatProductQuantity">Quantity</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <form:input id="floatProductQuantity" path="quantity" placeholder="Quantity" />
-                                
+                                <form:input id="floatProductQuantity" type="number" path="quantity" placeholder="Quantity" />
+                                <form:errors element="h6" path="quantity"/>
                             </div>
                         </div>
                         <label for="floatManufactor">Manufactor</label>
@@ -1017,7 +1018,7 @@ button:hover {
                         <label for="floatProductDiscount">Discount</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <form:input id="floatProductDiscount" path="discount"  placeholder="Discount" />
+                                <form:input id="floatProductDiscount" type="number" min="0" max="100" path="discount"  placeholder="Discount" />
                                 
                             </div>
                         </div>
@@ -1025,8 +1026,10 @@ button:hover {
                         <label for="floatProductCategory">Category Id</label>
                         <div class="dbl-field">
                             <div class="field">
-                                <form:input id="floatProductCategory" path="category"  placeholder="Category Id" />
-                                
+                                <form:select path="category.id">
+                                	<form:options items="${comboBoxCategory}" itemValue="id" itemLabel="name"></form:options>
+                                </form:select>
+                                <form:errors element="h6" path="category"/>
                             </div>
                         </div>
                         <label for="floatProductDescription">Description</label>

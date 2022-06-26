@@ -239,14 +239,22 @@ background-color: #3972a7;
 			<div class="right-bar" style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 60px">
 				<p><span>Delivery address</span></p>
 				<input type="text" name="address" id="" class="address__input">
+				<h6>${addressError}</h6>
 				<hr>
 				<p><span>Pick-up phone number</span></p>
 				<input type="text" name="phonenumber" id="" class="address__input">
+				<h6>${phonenumberError}</h6>
 				<hr>
 				<p><span>replacement recipient's name (if any)</span></p>
 				<input type="text" name="orderNote" id="" class="address__input">
 			</div>
-			<button type="submit" class="btn-checkout"><i class="fa fa-shopping-cart"></i>Checkout</button>
+			<c:if test="${shoppingCart.count == 0 }">
+				<button type="submit" disabled="disabled" class="btn-checkout"><i class="fa fa-shopping-cart"></i>Checkout</button>
+			</c:if>
+			<c:if test="${shoppingCart.count != 0 }">
+				<button type="submit" class="btn-checkout"><i class="fa fa-shopping-cart"></i>Checkout</button>
+		
+			</c:if>
 		</form>
 	</div>
 </body>
